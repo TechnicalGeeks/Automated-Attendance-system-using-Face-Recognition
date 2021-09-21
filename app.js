@@ -4,6 +4,10 @@ const morgan=require('morgan');
 const bodyParser=require('body-parser');
 require('dotenv').config();
 
+// Data Model
+const User=require('./models/User');
+
+
 // Express App
 const app=express();
 
@@ -35,3 +39,25 @@ app.use(express.urlencoded({extended: true}));
 
 // Static Files
 app.use(express.static('public'));
+
+// Routers
+app.get('/',(req,res)=>{
+    res.render('index');
+});
+
+app.post('/',(req,res)=>{
+    let username=req.username;
+    let password=req.password;
+    let role=req.role;
+    User.find({name:username,password:password}).then((result,err)=>{
+        if(err){
+            res.json({status:0,err:err})
+        };
+        if(result.role){
+            res.json({status:1})
+        }else{
+            res.json({status:0,err:"Access Denied",result:result})
+        }
+    })
+    
+})

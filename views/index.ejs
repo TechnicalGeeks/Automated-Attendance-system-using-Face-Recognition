@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>AASUFR | Sign In</title>
 </head>
 <body>
-    
+    <div class="container">
+        <form action="" id="form" class="form">
+            <h2>Login Here</h2>
+            <div class="form-control" id="formControl">
+                <label for="user" style="display: inline;">Login as : </label>
+                <select name="" id="User">
+                    <option value="admin">Administrator</option>
+                    <option value="faculty">Faculty</option>
+                    <option value="student">Student</option>
+                </select>
+            </div>
+            
+            <div class="form-control" id="formControl">
+                <label for="username">Username : </label>
+                <input type="username" id="username" placeholder="Enter Username">
+            </div>
+            <div class="form-control" id="formControl">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter Password">
+            </div>
+            <button id="login-form-submit" type="button" onclick="signIn()">Login</button>
+        </form>
+    </div>
+    <script src="scripts/login.js"></script>
 </body>
 </html>
