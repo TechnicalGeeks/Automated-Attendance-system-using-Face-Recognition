@@ -8,7 +8,7 @@ function signIn(){
         headers:{
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body:JSON.stringify({data:{username:username,password:password,role:role}})
+        body:JSON.stringify({username:username,password:password,role:role})
     }).then(response=>response.json())
     .then((data)=>{
         console.log(data);
@@ -17,6 +17,9 @@ function signIn(){
         }
         if(data.status==1){
             alert("Successfully Logged In");
+            localStorage.setItem('user',username);
+            localStorage.setItem('role',role);
+            window.location.replace(data.redirect);
         }
         
     }).catch((err)=>{

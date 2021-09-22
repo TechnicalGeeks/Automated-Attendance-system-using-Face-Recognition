@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <form action="/signUp" method="post">
+        <label for="username">Username :</label>
+        <input type="text" name="username" placeholder="Enter Username">
+        <label for="role">Role :</label>
+        <select name="role" id="role">
+            <option value="" disabled>Enter Role</option>
+            <option value="1">Administrator</option>
+            <option value="2">Faculty</option>
+            <option value="3">Student</option>
+        </select>
+        <label for="password">Password :</label>
+        <input type="password" name="password" placeholder="Enter Password">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -46,18 +46,40 @@ app.get('/',(req,res)=>{
 });
 
 app.post('/',(req,res)=>{
-    let username=req.username;
-    let password=req.password;
-    let role=req.role;
-    User.find({name:username,password:password}).then((result,err)=>{
-        if(err){
-            res.json({status:0,err:err})
-        };
-        if(result.role){
-            res.json({status:1})
+    console.log(req.body);
+    let username=req.body.username;
+    let password=req.body.password;
+    let role=req.body.role;
+    User.findOne({username:username,password:password}).then((result)=>{
+        console.log(parseInt(result.role)>=parseInt(req.body.role));
+        if(parseInt(result.role)>=parseInt(req.body.role)){
+            // console.log("hi");
+            res.json({status:1,redirect:"/home"});
         }else{
-            res.json({status:0,err:"Access Denied",result:result})
+            res.json({status:0,err:"Access Denied"})
         }
-    })
-    
-})
+    }).catch((err)=>{
+        res.json({status:0,err:err})
+    });    
+});
+
+app.get('/home',(req,res)=>{
+    res.render('home')
+});
+
+app.get('/signUp',(req,res)=>{
+    res.render('signUp');
+});
+
+app.post('/signUp',(req,res)=>{
+    console.log("##1",req.body);
+    let data=req.body;
+    data["status"]="0";
+    newUser=new User(data);
+    newUser.save().then((result)=>{
+        console.log(result);
+        res.render('home');
+    }).catch((err)=>{
+        console.log(err);
+    });
+});
