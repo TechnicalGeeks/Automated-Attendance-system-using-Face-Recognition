@@ -55,6 +55,8 @@ app.post('/',(req,res)=>{
         if(parseInt(result.role)>=parseInt(req.body.role)){
             // console.log("hi");
             res.json({status:1,redirect:"/home"});
+            result.status="1";
+            result.save();
         }else{
             res.json({status:0,err:"Access Denied"})
         }
@@ -65,6 +67,38 @@ app.post('/',(req,res)=>{
 
 app.get('/home',(req,res)=>{
     res.render('home')
+});
+
+app.post('/auth',(req,res)=>{
+    let username=req.body.username;
+    let role=req.body.role;
+    console.log("##1");
+    console.log(username,role);
+    if(role=="" || username==""){
+        console.log("##2");
+        res.json({status:0});
+    }
+    User.findOne({username:username}).then((result)=>{
+        console.log("##3");
+        if(result){
+            console.log("##4");
+            if(result.status=="0"){
+                console.log();
+                res.json({status:0});
+            }
+            else{
+                if(parseInt(result.role)>=parseInt(role)){
+                    res.json({status:1});
+                }
+                else{
+                    res.json({status:0});
+                }
+            }
+        }
+        else{
+            res.json({status:0})
+        }
+    })
 });
 
 app.get('/signUp',(req,res)=>{
