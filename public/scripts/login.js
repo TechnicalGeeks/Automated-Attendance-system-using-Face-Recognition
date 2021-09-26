@@ -39,12 +39,18 @@ function signIn(){
             alert("Successfully Logged In");
             localStorage.setItem('user',username);
             localStorage.setItem('role',role);
-            localStorage.setItem('status',data.status)
+            localStorage.setItem('id',data.id);
+            localStorage.setItem('status',data.status);
             window.location.replace(data.redirect);
         }
         
     }).catch((err)=>{
         console.log(err);
         alert("Something Went Wrong :( \n Try Again !!!")
-    })
+    });
+}
+
+function profile() {
+    let id=localStorage.getItem('id');
+    fetch("/profile/"+id);
 }

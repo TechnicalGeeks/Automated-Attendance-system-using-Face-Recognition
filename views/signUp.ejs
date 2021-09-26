@@ -8,17 +8,26 @@
 </head>
 <body>
     <form action="/signUp" method="post">
+        <label for="name">Name :</label>
+        <input type="text" name="name" placeholder="Enter Name" required>
+        <br>
         <label for="username">Username :</label>
-        <input type="text" name="username" placeholder="Enter Username">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <br>
         <label for="role">Role :</label>
-        <select name="role" id="role">
+        <select name="role" id="role" required>
             <option value="" disabled>Enter Role</option>
             <option value="1">Administrator</option>
             <option value="2">Faculty</option>
             <option value="3">Student</option>
         </select>
+        <br>
+        <label for="email">Email :</label>
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <label for="contact">Contact :</label>
+        <input type="text" name="contact" placeholder="Enter Contact" required>
         <label for="password">Password :</label>
-        <input type="password" name="password" placeholder="Enter Password">
+        <input type="password" name="password" placeholder="Enter Password" required>
         <input type="submit" value="Submit">
     </form>
 </body>

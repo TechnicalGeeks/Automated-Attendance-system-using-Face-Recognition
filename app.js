@@ -54,7 +54,7 @@ app.post('/',(req,res)=>{
         console.log(parseInt(result.role)>=parseInt(req.body.role));
         if(parseInt(result.role)>=parseInt(req.body.role)){
             // console.log("hi");
-            res.json({status:1,redirect:"/home"});
+            res.json({status:1,redirect:"/home",id:result.id});
             result.status="1";
             result.save();
         }else{
@@ -101,9 +101,41 @@ app.post('/auth',(req,res)=>{
     })
 });
 
+app.get("/profile/:id",(req,res)=>{
+    console.log("Profile");
+    let id=req.params.id;
+    User.findOne({id:id}).then((result)=>{
+        res.render('myProfile',{user:result});
+    })
+    
+})
+
+app.post("/profile/:id",(req,res)=>{
+    let userData=req.body;
+    let id=req.params.id;
+    console.log(userData);
+    User.findByIdAndUpdate(id,userData).then((result)=>{
+        console.log(result);
+        res.json({status:1})
+    }).catch((err)=>{
+        res.json({status:0,error:err})
+    });
+
+})
+
+app.get('/signOut/:id',(req,res)=>{
+    let id=req.params.id;
+    User.findOne({id:id}).then((result)=>{
+        result.status=0;
+        result.save();
+        res.redirect("/");
+    })
+});
+
 app.get('/signUp',(req,res)=>{
     res.render('signUp');
 });
+
 
 app.post('/signUp',(req,res)=>{
     console.log("##1",req.body);
