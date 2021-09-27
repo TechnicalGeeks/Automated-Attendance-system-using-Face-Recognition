@@ -51,8 +51,9 @@ app.post('/',(req,res)=>{
     let password=req.body.password;
     let role=req.body.role;
     User.findOne({username:username,password:password}).then((result)=>{
-        console.log(parseInt(result.role)>=parseInt(req.body.role));
-        if(parseInt(result.role)>=parseInt(req.body.role)){
+        console.log(result.role,role);
+        console.log(parseInt(result.role)<=parseInt(req.body.role));
+        if(parseInt(result.role)<=parseInt(role)){
             // console.log("hi");
             res.json({status:1,redirect:"/home",id:result.id});
             result.status="1";
@@ -101,6 +102,19 @@ app.post('/auth',(req,res)=>{
     })
 });
 
+app.get("/users",(req,res)=>{
+    User.find().then((result)=>{
+        res.render("users",{title:"Users",users:result})
+    })
+});
+
+app.get("/users/delete/:id",(req,res)=>{
+    User.findByIdAndDelete(req.params.id).then((result)=>{
+        console.log(result);
+        res.redirect("/users")
+    })
+});
+
 app.get("/about",(req,res)=>{
     res.render('about',{title:'About'})
 })
@@ -108,7 +122,7 @@ app.get("/about",(req,res)=>{
 app.get("/profile/:id",(req,res)=>{
     console.log("Profile");
     let id=req.params.id;
-    User.findOne({id:id}).then((result)=>{
+    User.findById(id).then((result)=>{
         res.render('myProfile',{user:result,title:'My Profile'});
     })
     
@@ -148,7 +162,7 @@ app.post('/signUp',(req,res)=>{
     newUser=new User(data);
     newUser.save().then((result)=>{
         console.log(result);
-        res.render('home');
+        res.redirect('/');
     }).catch((err)=>{
         console.log(err);
     });
