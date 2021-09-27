@@ -66,7 +66,7 @@ app.post('/',(req,res)=>{
 });
 
 app.get('/home',(req,res)=>{
-    res.render('home')
+    res.render('home',{title:'Home'})
 });
 
 app.post('/auth',(req,res)=>{
@@ -101,11 +101,15 @@ app.post('/auth',(req,res)=>{
     })
 });
 
+app.get("/about",(req,res)=>{
+    res.render('about',{title:'About'})
+})
+
 app.get("/profile/:id",(req,res)=>{
     console.log("Profile");
     let id=req.params.id;
     User.findOne({id:id}).then((result)=>{
-        res.render('myProfile',{user:result});
+        res.render('myProfile',{user:result,title:'My Profile'});
     })
     
 })
