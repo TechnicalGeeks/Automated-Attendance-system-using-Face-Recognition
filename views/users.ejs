@@ -19,7 +19,8 @@
                     <%  let role={
                             1:"Admin",
                             2:"Faculty",
-                            3:"Student"
+                            3:"Student",
+                            4:"Guest"
                         };
                         let status={
                             0:"Inactive",
@@ -49,19 +50,20 @@
                                     <option value="1">Admin</option>
                                     <option value="2">Faculty</option>
                                     <option value="3">Student</option>
+                                    <option value="4">Guest</option>
                                 </select>
-                                <%= role[user.role] %></td>
+                            </td>
                             <td class="px-4 py-3 text-xs border">
                                 <span class="px-2 py-1 font-semibold leading-tight <%= color[user.status] %>  rounded-sm"> <%= status[user.status]%> </span>
                             </td>
                             <td class="px-4 py-3 text-sm border">
-                                <a class="text-green-500 hover:text-green-100 mr-2" onclick="update('<%= user.id %>')">
+                                <a class="text-green-500 hover:text-green-100 mr-2" onclick="update('<%= user.id %>')" title="Update Role">
                                     <i class="fas fa-upload" ></i>
                                 </a>
-                                <a href="/profile/<%= user.id %>" class="text-yellow-400 hover:text-gray-100 mx-2">
+                                <a href="/profile/<%= user.id %>" class="text-yellow-400 hover:text-gray-100 mx-2" title="View And Edit User">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a href="/users/delete/<%= user.id %>"class="text-red-400 hover:text-gray-100 ml-2">
+                                <a href="/users/delete/<%= user.id %>"class="text-red-400 hover:text-gray-100 ml-2" title="Delete User">
                                     <i class="fas fa-trash-alt"></i>                
                                 </a>
                             </td>

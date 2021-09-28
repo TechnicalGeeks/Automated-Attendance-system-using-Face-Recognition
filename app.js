@@ -156,9 +156,9 @@ app.post("/profile/:id",(req,res)=>{
 
 app.get('/signOut/:id',(req,res)=>{
     let id=req.params.id;
-    User.findOne({id:id}).then((result)=>{
-        result.status=0;
-        result.save();
+    User.findByIdAndUpdate(id,{status:0})
+    .then((result)=>{
+        console.log("###SignOut"+result);
         res.redirect("/");
     })
 });
