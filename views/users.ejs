@@ -43,13 +43,20 @@
                                 </div>
                                 </div>
                             </td>
-                            <td class="px-4 py-3 text-ms font-semibold border"><%= role[user.role] %></td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <select name="role" id="role#<%= user.id %>">
+                                    <option value="<%= user.role %>"><%= role[user.role] %> (Current) </option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Faculty</option>
+                                    <option value="3">Student</option>
+                                </select>
+                                <%= role[user.role] %></td>
                             <td class="px-4 py-3 text-xs border">
                                 <span class="px-2 py-1 font-semibold leading-tight <%= color[user.status] %>  rounded-sm"> <%= status[user.status]%> </span>
                             </td>
                             <td class="px-4 py-3 text-sm border">
-                                <a href="/profile/<%= user.id %>" class="text-gray-500 hover:text-gray-100 mr-2">
-                                    <i class="far fa-eye"></i>
+                                <a class="text-green-500 hover:text-green-100 mr-2" onclick="update('<%= user.id %>')">
+                                    <i class="fas fa-upload" ></i>
                                 </a>
                                 <a href="/profile/<%= user.id %>" class="text-yellow-400 hover:text-gray-100 mx-2">
                                     <i class="fas fa-pencil-alt"></i>
@@ -71,6 +78,26 @@
     <script>
         if(localStorage.getItem('role')!=1){
             window.location.replace('/home')
+        }
+        function update(id) {
+            let role=document.getElementById("role#"+id).value;
+            fetch("/users/update",{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({id:id,role:role})
+            }).then(response=>response.json())
+            .then((data)=>{
+                if(data.error){
+                    console.log(data.error);
+                }
+                if(data.status==1){
+                    window.location.reload();
+                }
+            }).catch((err)=>{
+                console.log(err);
+            })
         }
     </script> 
 </body> 

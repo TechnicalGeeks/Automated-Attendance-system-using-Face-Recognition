@@ -115,6 +115,19 @@ app.get("/users/delete/:id",(req,res)=>{
     })
 });
 
+app.post("/users/update",(req,res)=>{
+    let id=req.body.id;
+    let role=req.body.role;
+    console.log("##Update User",req.body);
+    User.findByIdAndUpdate(id,{role:role}).then((result)=>{
+        console.log(result);
+        res.json({status:1});
+    }).catch((err)=>{
+        console.log(err);
+        res.json({status:0,error:err})
+    })
+})
+
 app.get("/about",(req,res)=>{
     res.render('about',{title:'About'})
 })
