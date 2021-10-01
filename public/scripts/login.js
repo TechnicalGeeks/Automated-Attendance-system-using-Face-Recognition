@@ -21,8 +21,7 @@ function auth(){
 function signIn(){
     const username = form.username.value;
     const password = form.password.value;
-    const role= form.User.value;
-
+    const role= form.role.value;
     fetch("/",{
         method:'POST',
         headers:{

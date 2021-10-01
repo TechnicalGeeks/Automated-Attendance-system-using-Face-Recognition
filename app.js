@@ -88,7 +88,7 @@ app.post('/auth',(req,res)=>{
                 res.json({status:0});
             }
             else{
-                if(parseInt(result.role)>=parseInt(role)){
+                if(parseInt(result.role)<=parseInt(role)){
                     res.json({status:1});
                 }
                 else{
