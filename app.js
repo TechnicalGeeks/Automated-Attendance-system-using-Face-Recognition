@@ -51,7 +51,7 @@ app.post('/',(req,res)=>{
     let password=req.body.password;
     let role=req.body.role;
     User.findOne({username:username,password:password}).then((result)=>{
-        console.log(result.role,role);
+        console.log(result);
         console.log(parseInt(result.role)<=parseInt(req.body.role));
         if(parseInt(result.role)<=parseInt(role)){
             // console.log("hi");
@@ -59,11 +59,11 @@ app.post('/',(req,res)=>{
             result.status="1";
             result.save();
         }else{
-            res.json({status:0,err:"Access Denied"})
+            res.json({status:0,err:"Access Denied"});
         }
     }).catch((err)=>{
         res.json({status:0,err:err})
-    });    
+    });  
 });
 
 app.get('/home',(req,res)=>{
@@ -180,3 +180,8 @@ app.post('/signUp',(req,res)=>{
         console.log(err);
     });
 });
+
+app.use((req,res)=>{
+    console.log("Page Not Found");
+    res.render("404",{title:"Page Not Found"})
+})
