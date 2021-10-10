@@ -41,10 +41,11 @@
                   Subject <%= i+1 %> 
                 </label>
                  <select class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" onchange="addOther(this.value,'<%=i+1%>')" id="subSelect<%=i+1%>"  name="sub<%=i+1%>">
-                    <option value="" disabled>Enter Subject</option>
-                    <option value="1" >Administrator</option>
-                    <option value="2"  >Faculty</option>
-                    <option value="3"  >Student</option>
+                    <option value="">Enter Subject</option>
+                    <% if(subjects){ %> 
+                    <% subjects.forEach(subject => {%>
+                      <option value="z<%=subject.id%>" ><%= subject.name%></option>
+                    <% });} %> 
                     <option value="0">Other</option>
                   </select>
                   <input  disabled class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required id="subInput<%=i+1%>" name="sub<%=i+1%>" type="hidden" placeholder="Enter Other Subject">
@@ -52,7 +53,14 @@
             <% } %> 
             
           </div>
-          <button class="flex mx-auto mb-6 md:mb-0 text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded-lg">Submit</button>       
+          <div class="flex flex-wrap -mx-auto mb-6 text-center">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">Submit</button>
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <a><button class="m-2  text-black bg-white border-2 border-black py-2 px-5 focus:outline-none hover:bg-black hover:text-white rounded">Cancel</button></a>       
+            </div>
+          </div>
       </form>
     </div>
 

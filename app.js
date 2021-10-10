@@ -185,13 +185,82 @@ app.post("/signUp", (req, res) => {
 });
 
 app.get("/addCourse",(req,res)=>{
-	res.render("addCourse",{title:"Add Course"});
+	Subject.find().then((result)=>{
+		console.log(result.length);
+		res.render("addCourse",{title:"Add Course",subjects:result});
+	})
+	
 });
 
 app.post("/addCourse",(req,res)=>{
 	console.log(req.body);
+	let data=req.body;
+	course={
+		year: data.year,
+		division: data.division,
+		branch: data.branch
+	}
+	let subject=[data.sub1,data.sub2,data.sub3,data.sub4,data.sub5]
+	let promises=subject.map(function(item){
+		if(item[0]="z"){
+			item=item.substr(1,item.length);
+		}
+		else{
+			Subject.findOne().sort({createdAt:-1}).
+			then((lastSubject)=>{
+				let id=lastSubject.id+1;
+				newSubject=new Subject({id:id,name:item});
+				newSubject.save().then((response)=>{
+					console.log(response);
+				});
+				item=id;
+			})
+		}
+	})
+	// for (let i = 0; i < subject.length; i++) {
+	// 	if(subject[i][0]=="z"){
+	// 		subject[i]=subject[i].substr(1,subject[i].length);
+	// 	}
+	// 	else{
+	// 		Subject.findOne().sort({createdAt:-1}).
+	// 		then((lastSubject)=>{
+	// 			let id=1;
+	// 			if(lastSubject){
+	// 				id=lastSubject.id+1;
+	// 			}
+				
+	// 			newSubject=new Subject({id:id,name:subject[i]});
+	// 			newSubject.save().then((response)=>{
+	// 				console.log("##Subject"+response);
+	// 			});
+	// 			subject[i]=id;
+	// 		})
+	// 	}
+		
+	// }
 	
-	res.redirect("/addCourse");
+	Promise.all(promises).then(()=>{
+		Course.findOne().sort({createdAt:-1}).
+		then((lastCourse)=>{
+			if(lastCourse){
+				course['id']=(parseInt(lastCourse.id)+1).toString();
+			}
+			else{
+				course['id']=1
+			}
+			
+			course["subjects"]=subject;
+			console.log(course);
+			new Course(course).save().then((result)=>{
+				console.log(result);
+			})
+		})
+		res.redirect("/addCourse");
+	})
+	
+	
+	
+	
 });
 
 app.use((req, res) => {

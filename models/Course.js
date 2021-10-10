@@ -20,7 +20,7 @@ const CourseSchema= new Schema({
     type: String,
     required:true,
   },
-  Subject:[
+  subjects:[
     {
       type: String,
       required:true,
