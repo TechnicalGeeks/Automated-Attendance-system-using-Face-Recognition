@@ -6,9 +6,9 @@ require("dotenv").config();
 
 // Data Model
 const User = require("./models/User");
-const Course= require("./models/Course");
-const Subject= require("./models/Subject");
-
+const Course = require("./models/Course");
+const Subject = require("./models/Subject");
+const Student = require("./models/Student");
 // Express App
 const app = express();
 
@@ -184,39 +184,42 @@ app.post("/signUp", (req, res) => {
 		});
 });
 
-app.get("/addCourse",(req,res)=>{
-	Subject.find().then((result)=>{
+app.get("/addCourse", (req, res) => {
+	Subject.find().then((result) => {
 		console.log(result.length);
-		res.render("addCourse",{title:"Add Course",subjects:result});
-	})
-	
+		res.render("addCourse", { title: "Add Course", subjects: result });
+	});
 });
 
-app.post("/addCourse",(req,res)=>{
+app.post("/addCourse", (req, res) => {
 	console.log(req.body);
-	let data=req.body;
-	course={
+	let data = req.body;
+	course = {
 		year: data.year,
 		division: data.division,
-		branch: data.branch
-	}
-	let subject=[data.sub1,data.sub2,data.sub3,data.sub4,data.sub5]
-	let promises=subject.map(function(item){
-		if(item[0]="z"){
-			item=item.substr(1,item.length);
-		}
-		else{
-			Subject.findOne().sort({createdAt:-1}).
-			then((lastSubject)=>{
-				let id=lastSubject.id+1;
-				newSubject=new Subject({id:id,name:item});
-				newSubject.save().then((response)=>{
-					console.log(response);
+		branch: data.branch,
+		sem: data.sem,
+	};
+
+	let subject = [data.sub1, data.sub2, data.sub3, data.sub4, data.sub5];
+	let promises = subject.filter(data => data).map(function (item, index) {
+		if ((item[0] === "z")) {
+			item = item.substr(1, item.length);
+			saveNewSubjects(item, res);
+		} else {
+			Subject.findOne()
+				.sort({ createdAt: -1 })
+				.then((lastSubject) => {
+					console.log('last sub', lastSubject);
+					let id = lastSubject? (+lastSubject.id + index + 1) + '' : 1;
+					newSubject = new Subject({ id: id, name: item });
+					newSubject.save().then((response) => {
+						console.log(response);
+						saveNewSubjects(id, res);
+						});
 				});
-				item=id;
-			})
 		}
-	})
+	});
 	// for (let i = 0; i < subject.length; i++) {
 	// 	if(subject[i][0]=="z"){
 	// 		subject[i]=subject[i].substr(1,subject[i].length);
@@ -228,7 +231,7 @@ app.post("/addCourse",(req,res)=>{
 	// 			if(lastSubject){
 	// 				id=lastSubject.id+1;
 	// 			}
-				
+
 	// 			newSubject=new Subject({id:id,name:subject[i]});
 	// 			newSubject.save().then((response)=>{
 	// 				console.log("##Subject"+response);
@@ -236,34 +239,42 @@ app.post("/addCourse",(req,res)=>{
 	// 			subject[i]=id;
 	// 		})
 	// 	}
-		
+
 	// }
-	
-	Promise.all(promises).then(()=>{
-		Course.findOne().sort({createdAt:-1}).
-		then((lastCourse)=>{
-			if(lastCourse){
-				course['id']=(parseInt(lastCourse.id)+1).toString();
-			}
-			else{
-				course['id']=1
-			}
-			
-			course["subjects"]=subject;
-			console.log(course);
-			new Course(course).save().then((result)=>{
-				console.log(result);
-			})
-		})
-		res.redirect("/addCourse");
-	})
-	
-	
-	
-	
+
 });
+
+app.get("/addStudent",(req,res)=>{
+	res.render("addStudent",{title:"Add Student"});
+});
+
+app.post("/addStudent",(req,res)=>{
+	console.log(req.body);
+})
 
 app.use((req, res) => {
 	console.log("Page Not Found");
 	res.render("404", { title: "Page Not Found" });
 });
+
+
+function saveNewSubjects(data, res) {
+	console.log('promise resolve', data);
+	Course.findOne()
+		.sort({ createdAt: -1 })
+		.then((lastCourse) => {
+			if (lastCourse) {
+				course["id"] = (parseInt(lastCourse.id) + 1).toString();
+			} else {
+				course["id"] = 1;
+			}
+
+			course["subjects"] = data;
+			console.log(course);
+			new Course(course).save().then((result) => {
+				console.log(result);
+			});
+		});
+	res.redirect("/addCourse");
+}
+

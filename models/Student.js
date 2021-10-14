@@ -1,38 +1,35 @@
 const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 
-const CourseSchema= new Schema({
+const StudentSchema= new Schema({
   id:{
     type: String,
     required:true,
     unique:true,
     index:true
   },
-  branch:{
+  fname:{
     type: String,
     required:true,
   },
-  year:{
+  mname:{
+    type: String,
+  },
+  lname:{
     type: String,
     required:true,
   },
-  sem:{
+  courseId:{
     type: String,
     required:true,
   },
-  division:{
+  rollNo:{
     type: String,
     required:true,
   },
-  subjects:[
-    {
-      type: String,
-      required:true,
-    }
-  ]
   
 },{timestamps:true});
 
-const Course=mongoose.model('Course',CourseSchema);
+const Student=mongoose.model('Student',StudentSchema);
 
-module.exports=Course;
+module.exports=Student;
