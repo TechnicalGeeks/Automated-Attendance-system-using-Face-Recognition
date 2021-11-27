@@ -191,57 +191,25 @@ app.get("/addCourse", (req, res) => {
 	});
 });
 
-app.post("/addCourse", (req, res) => {
-	console.log(req.body);
-	let data = req.body;
-	course = {
-		year: data.year,
-		division: data.division,
-		branch: data.branch,
-		sem: data.sem,
-	};
-
-	let subject = [data.sub1, data.sub2, data.sub3, data.sub4, data.sub5];
-	let promises = subject.filter(data => data).map(function (item, index) {
-		if ((item[0] === "z")) {
-			item = item.substr(1, item.length);
-			saveNewSubjects(item, res);
-		} else {
-			Subject.findOne()
-				.sort({ createdAt: -1 })
-				.then((lastSubject) => {
-					console.log('last sub', lastSubject);
-					let id = lastSubject? (+lastSubject.id + index + 1) + '' : 1;
-					newSubject = new Subject({ id: id, name: item });
-					newSubject.save().then((response) => {
-						console.log(response);
-						saveNewSubjects(id, res);
-						});
-				});
-		}
+app.post("/addCourse",(req,res)=>{
+	let data=req.body;
+	console.log(data);
+	addSubjects([data.sub1,data.sub2,data.sub3,data.sub4,data.sub5]).then((result)=>{
+		console.log(result);
+		data.subjects=result;
+		console.log("###No ID",data);
+		getCourseId().then((courseId)=>{
+			console.log("###Course Id",courseId);
+			data["id"]=courseId;
+			console.log(data);
+			newCourse=new Course(data);
+			newCourse.save().then((result)=>{
+			console.log(result);
+			res.redirect("/addCourse");
+		});
+		})
+		
 	});
-	// for (let i = 0; i < subject.length; i++) {
-	// 	if(subject[i][0]=="z"){
-	// 		subject[i]=subject[i].substr(1,subject[i].length);
-	// 	}
-	// 	else{
-	// 		Subject.findOne().sort({createdAt:-1}).
-	// 		then((lastSubject)=>{
-	// 			let id=1;
-	// 			if(lastSubject){
-	// 				id=lastSubject.id+1;
-	// 			}
-
-	// 			newSubject=new Subject({id:id,name:subject[i]});
-	// 			newSubject.save().then((response)=>{
-	// 				console.log("##Subject"+response);
-	// 			});
-	// 			subject[i]=id;
-	// 		})
-	// 	}
-
-	// }
-
 });
 
 app.get("/addStudent",(req,res)=>{
@@ -257,24 +225,37 @@ app.use((req, res) => {
 	res.render("404", { title: "Page Not Found" });
 });
 
-
-function saveNewSubjects(data, res) {
-	console.log('promise resolve', data);
-	Course.findOne()
-		.sort({ createdAt: -1 })
-		.then((lastCourse) => {
-			if (lastCourse) {
-				course["id"] = (parseInt(lastCourse.id) + 1).toString();
-			} else {
-				course["id"] = 1;
-			}
-
-			course["subjects"] = data;
-			console.log(course);
-			new Course(course).save().then((result) => {
-				console.log(result);
+const addSubjects=async (subjects)=>{
+	console.log(subjects);
+	
+	for (let i = 0; i < subjects.length; i++) { 
+		if (subjects[i][0]==="z"){
+			subjects[i]=await parseInt(subjects[i].substr(1,subjects[i].length));
+		}
+		else{
+			let id= await Subject.findOne().sort({createdAt:-1}).then((lastSubject)=>{
+				let id=1;
+				if(lastSubject){
+					id=parseInt(lastSubject.id)+1;
+				}
+				return id;
 			});
-		});
-	res.redirect("/addCourse");
+			let newSubject=new Subject({id:id,name:subjects[i]});
+			await newSubject.save().then((response)=>{
+				console.log(response);
+				subjects[i]=id;
+			});
+		}
+	};
+	return subjects;
 }
 
+const getCourseId=async ()=>{
+	return Course.find().sort({createdAt:-1}).limit(1).then((lastCourse)=>{
+		console.log("##lastCourse",lastCourse);
+		let courseId= lastCourse[0]?parseInt(lastCourse[0].id)+1+"":"1";
+		console.log("### getCourseID",courseId);
+		return courseId;
+	});
+	
+};
