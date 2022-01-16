@@ -260,6 +260,39 @@ app.post('/createLecture',(req,res)=>{
 	});
 });
 
+app.get("/course",(req,res)=>{
+	Course.find().then((courses)=>{
+		let subjects={};
+		Subject.find().then((result)=>{
+			for (let i = 0; i < result.length; i++) {
+				subjects[result[i].id]=result[i].name;
+				
+			}
+			console.log(courses,subjects);
+			res.render('course',{title:'Course',courses:courses,subjects:subjects});
+		});
+	});
+});
+
+app.post("/course/update",(req,res)=>{
+	let data=req.body;
+	let id=data.id;
+	console.log("Update",data);
+	delete data.id;
+	Course.findByIdAndUpdate(id,data).then((result)=>{
+		console.log(result);
+		res.json({status:1});
+	});
+});
+
+app.get("/course/delete/:id",(req,res)=>{
+	let id=req.params.id;
+	Course.findByIdAndDelete(id).then((result)=>{
+		console.log(result);
+		res.redirect("/course");
+	});
+});
+
 app.use((req, res) => {
 	console.log("Page Not Found");
 	res.render("404", { title: "Page Not Found" });
