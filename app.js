@@ -9,6 +9,7 @@ const User = require("./models/User");
 const Course = require("./models/Course");
 const Subject = require("./models/Subject");
 const Student = require("./models/Student");
+const Lecture = require("./models/Lecture");
 // Express App
 const app = express();
 
@@ -218,7 +219,46 @@ app.get("/addStudent",(req,res)=>{
 
 app.post("/addStudent",(req,res)=>{
 	console.log(req.body);
-})
+	let data=req.body;
+	Course.find({branch:data.branch,year:data.year,sem:data.sem,div:data.div}).then((course)=>{
+		console.log(course);
+		console.log("##COurse Id",course[0].id);
+		data.courseId=course[0].id;
+		['branch','year','sem','div'].forEach((key)=>delete data[key]);
+		console.log("###No ID",data);
+		getStudentId().then((studentId)=>{
+			console.log(studentId);
+			data.id=studentId;
+			console.log("##FInal Data",data);
+			newStudent=new Student(data);
+			newStudent.save().then((result)=>{
+			console.log(result);
+			res.redirect("/addStudent");
+		});
+		})
+		
+	});
+});
+
+app.get('/createLecture',(req,res)=>{
+	res.render('createLecture',{title:'Create Lecture'});
+});
+
+app.post('/createLecture',(req,res)=>{
+	console.log(req.body);
+	let data=req.body;
+	Course.find({branch:data.branch,year:data.year,sem:data.sem,div:data.div}).then((course)=>{
+		console.log(course);
+		console.log("##Course Id",course[0].id);
+		data.courseId=course[0].id;
+		['branch','year','sem','div'].forEach((key)=>delete data[key]);
+		console.log("###No ID",data);
+		new Lecture(data).save().then((result)=>{
+		console.log(result);
+		res.redirect(process.env.model+"/createLecture");
+		})
+	});
+});
 
 app.use((req, res) => {
 	console.log("Page Not Found");
@@ -258,4 +298,13 @@ const getCourseId=async ()=>{
 		return courseId;
 	});
 	
+};
+
+const getStudentId=async ()=>{
+	return Student.find().sort({createdAt:-1}).limit(1).then((lastStudent)=>{
+		console.log("##lastStudent",lastStudent);
+		let studentId= lastStudent[0]?parseInt(lastStudent[0].id)+1+"":"1";
+		console.log("### getStudentID",studentId);
+		return studentId;
+	});	
 };
