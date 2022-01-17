@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('./partials/header') %>
+<%- include('../.Partials/header') %>
 <body>
-    <%- include('./partials/nav') %>
+    <%- include('../.Partials/nav') %>
     <div class="content">
         <!-- component -->
         <section class="container mx-auto p-6 font-mono">
@@ -79,7 +79,7 @@
             </div>
         </section>
     </div>
-    <%- include('./partials/footer') %>
+    <%- include('../.Partials/footer') %>
     <script>
         if(localStorage.getItem('role')!=1){
             window.location.replace('/home')

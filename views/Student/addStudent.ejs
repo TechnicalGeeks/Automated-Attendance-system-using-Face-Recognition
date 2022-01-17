@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('./.Partials/header.ejs') %>
+<%- include('../.Partials/header.ejs') %>
 <body>
-    <%- include('./.Partials/nav.ejs') %> 
+    <%- include('../.Partials/nav.ejs') %> 
 
     <div class="content">
-      <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" action="/createLecture" method="POST">
-          <h2 class="title-font text-2xl font-medium mx-auto mt-6 mb-6 text-center">Create Lecture</h2>
+      <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" action="/student/add" method="POST">
+          <h2 class="title-font text-2xl font-medium mx-auto mt-6 mb-6 text-center">Add Student</h2>
           <div class="flex flex-wrap -mx-auto mb-6">
-            
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-6">
+              <label class="block uppercase tracking-wide   text-xs font-bold mb-2" for="fname">
+              First Name
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" required id="fname" type="text" placeholder="Enter First Name" name="fname">
+            </div>
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-6">
+              <label class="block uppercase tracking-wide   text-xs font-bold mb-2" for="mname">
+              Middle Name
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="mname" name="mname" type="text" placeholder="Enter Middle Name">
+            </div>
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-6">
+              <label class="block uppercase tracking-wide   text-xs font-bold mb-2" for="lname">
+              Last Name
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required id="lname" name="lname" type="text" placeholder="Enter Last Name">
+            </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-6">
               <label class="block uppercase tracking-wide   text-xs font-bold mb-2" for="branch">
               Branch
@@ -55,10 +72,10 @@
               </select>            
             </div>
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-6">
-              <label class="block uppercase tracking-wide   text-xs font-bold mb-2" for="subject">
-              Subjects
+              <label class="block uppercase tracking-wide   text-xs font-bold mb-2" for="rollNo">
+              Roll No.
               </label>
-              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" required id="subject" type="text" placeholder="Enter Subject" name="subject">
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required id="rollNo" name="rollNo" type="text" placeholder="Enter Roll No.">            
             </div>
 
           </div>
@@ -75,8 +92,22 @@
     </div>
 
 
-    <%- include('./.Partials/footer.ejs') %> 
+    <%- include('../.Partials/footer.ejs') %> 
 
-  
+    <!-- JS Scripts -->
+  <script>
+    function addOther(val,id) {
+      console.log(val,id);
+      if(val=="0"){
+        let subSelect=document.getElementById("subSelect"+id);
+        let subInput=document.getElementById("subInput"+id);
+        subSelect.style.display="none";
+        subSelect.disabled=true;
+        subInput.disabled=false;
+        subInput.type="text";
+      }
+      
+    }
+  </script>
 </body>
 </html>

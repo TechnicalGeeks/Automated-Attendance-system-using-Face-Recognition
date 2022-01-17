@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('./partials/header.ejs') %>
+<%- include('./.Partials/header.ejs') %>
 <body>
-    <%- include('./partials/nav.ejs') %> 
+    <%- include('./.Partials/nav.ejs') %> 
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap -mx-4 -mb-10 text-center ">
@@ -33,7 +33,7 @@
         </div> -->
         <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Add Student</h2>
         <p class="leading-relaxed text-base">Admin can add new Student's data to database.</p>
-        <a href="/addStudent" >
+        <a href="/student/add" >
           <button class="flex mx-auto mt-6 text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">GO</button>
         </a>
       </div>
@@ -43,7 +43,7 @@
         </div> -->
         <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Create Lecture</h2>
         <p class="leading-relaxed text-base">Faculty can start a new lecture attendance.</p>
-        <a href="/createLecture" >
+        <a href="/lecture/create" >
           <button class="flex mx-auto mt-6 text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">GO</button>
         </a>      </div>
       <div class="sm:w-1/4 mb-10 p-2 bg-white bg-opacity-50 rounded-lg m-2">
@@ -74,6 +74,6 @@
     </div>
   </div>
 </section>
-    <%- include('./partials/footer.ejs') %> 
+    <%- include('./.Partials/footer.ejs') %> 
 </body>
 </html>

@@ -19,9 +19,9 @@ function auth() {
 		});
 }
 function signIn() {
-	const username = form.username.value;
-	const password = form.password.value;
-	const role = form.role.value;
+	const username = document.getElementById("username").value;
+	const password = document.getElementById("password").value;
+	const role = document.getElementById("role").value;
 	fetch("/user", {
 		method: "POST",
 		headers: {

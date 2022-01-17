@@ -7,6 +7,8 @@ require("dotenv").config();
 // Routers
 const userRouter = require("./routes/user");
 const courseRouter = require("./routes/course");
+const studentRouter = require("./routes/student");
+const lectureRouter = require("./routes/lecture");
 
 // Data Model
 const User = require("./models/User");
@@ -51,8 +53,6 @@ app.get("/", (req, res) => {
 	res.redirect("/user")
 });
 
-app.use("/user", userRouter);
-
 app.get("/home", (req, res) => {
 	res.render("home", { title: "Home" });
 });
@@ -61,56 +61,13 @@ app.get("/about", (req, res) => {
 	res.render("about", { title: "About" });
 });
 
+app.use("/user", userRouter);
+
 app.use('/course',courseRouter);
 
-app.get("/addStudent",(req,res)=>{
-	res.render("addStudent",{title:"Add Student"});
-});
+app.use('/student',studentRouter);
 
-app.post("/addStudent",(req,res)=>{
-	console.log(req.body);
-	let data=req.body;
-	Course.find({branch:data.branch,year:data.year,sem:data.sem,div:data.div}).then((course)=>{
-		console.log(course);
-		console.log("##COurse Id",course[0].id);
-		data.courseId=course[0].id;
-		['branch','year','sem','div'].forEach((key)=>delete data[key]);
-		console.log("###No ID",data);
-		getStudentId().then((studentId)=>{
-			console.log(studentId);
-			data.id=studentId;
-			console.log("##FInal Data",data);
-			newStudent=new Student(data);
-			newStudent.save().then((result)=>{
-			console.log(result);
-			res.redirect("/addStudent");
-		});
-		})
-		
-	});
-});
-
-app.get('/createLecture',(req,res)=>{
-	res.render('createLecture',{title:'Create Lecture'});
-});
-
-app.post('/createLecture',(req,res)=>{
-	console.log(req.body);
-	let data=req.body;
-	Course.find({branch:data.branch,year:data.year,sem:data.sem,div:data.div}).then((course)=>{
-		console.log(course);
-		console.log("##Course Id",course[0].id);
-		data.courseId=course[0].id;
-		['branch','year','sem','div'].forEach((key)=>delete data[key]);
-		console.log("###No ID",data);
-		new Lecture(data).save().then((result)=>{
-		console.log(result);
-		res.redirect(process.env.model+"/createLecture");
-		})
-	});
-});
-
-
+app.use('/lecture',lectureRouter);
 
 app.use((req, res) => {
 	console.log("Page Not Found");
@@ -119,11 +76,3 @@ app.use((req, res) => {
 
 
 
-const getStudentId=async ()=>{
-	return Student.find().sort({createdAt:-1}).limit(1).then((lastStudent)=>{
-		console.log("##lastStudent",lastStudent);
-		let studentId= lastStudent[0]?parseInt(lastStudent[0].id)+1+"":"1";
-		console.log("### getStudentID",studentId);
-		return studentId;
-	});	
-};

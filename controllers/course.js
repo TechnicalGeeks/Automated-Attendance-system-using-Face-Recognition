@@ -4,7 +4,7 @@ const Subject = require("../models/Subject");
 const get_course_add= (req, res) => {
 	Subject.find().then((result) => {
 		console.log(result.length);
-		res.render("addCourse", { title: "Add Course", subjects: result });
+		res.render("Course/addCourse", { title: "Add Course", subjects: result });
 	});
 };
 
@@ -38,7 +38,7 @@ const get_course_all=(req,res)=>{
 				
 			}
 			console.log(courses,subjects);
-			res.render('course',{title:'Course',courses:courses,subjects:subjects});
+			res.render('Course/allCourses',{title:'Course',courses:courses,subjects:subjects});
 		});
 	});
 };

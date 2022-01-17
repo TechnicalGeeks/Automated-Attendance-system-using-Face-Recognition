@@ -1,7 +1,7 @@
 const User=require('../models/User');
 
 const get_user_signIn=(req,res)=>{
-	res.render("index")
+	res.render("User/signIn")
 };
 
 const post_user_signIn=(req, res) => {
@@ -36,7 +36,7 @@ const get_user_signOut=(req, res) => {
 };
 
 const get_user_signUp=(req, res) => {
-	res.render("signUp");
+	res.render("User/signUp");
 };
 
 const post_user_signUp=(req, res) => {
@@ -86,7 +86,7 @@ const post_user_auth=(req, res) => {
 
 const get_user_all= (req, res) => {
 	User.find().then((result) => {
-		res.render("users", { title: "Users", users: result });
+		res.render("User/users", { title: "Users", users: result });
 	});
 };
 
@@ -116,7 +116,7 @@ const get_user_profile=(req, res) => {
 	console.log("Profile");
 	let id = req.params.id;
 	User.findById(id).then((result) => {
-		res.render("myProfile", { user: result, title: "My Profile" });
+		res.render("User/myProfile", { user: result, title: "My Profile" });
 	});
 };
 
