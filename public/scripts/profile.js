@@ -41,7 +41,7 @@ function submit() {
 	let contact = document.getElementById("contact").value;
 	let password = document.getElementById("password").value;
 	let id = localStorage.getItem("id");
-	fetch("/profile/" + id, {
+	fetch("/user/" + id, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",

@@ -5,7 +5,7 @@
             <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg> -->
-            <img src="http://localhost:3011/images/logo.jpg" class="rounded-full w-12 h-12"  alt="P C C O E logo">
+            <img src="/images/logo.jpg" class="rounded-full w-12 h-12"  alt="P C C O E logo">
             <span class="ml-3 text-xl">Pimpri Chinchwad College of Engineering</span>
           </a>
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
@@ -25,6 +25,6 @@
 
 <script>
   let id=localStorage.getItem("id");
-  document.getElementById("profile").setAttribute("href","/profile/"+id)
-  document.getElementById("signOut").setAttribute("href","/signOut/"+id)
+  document.getElementById("profile").setAttribute("href","/user/"+id)
+  document.getElementById("signOut").setAttribute("href","/user/signOut/"+id)
 </script>

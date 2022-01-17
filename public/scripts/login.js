@@ -2,7 +2,7 @@ function auth() {
 	const username = localStorage.getItem("user");
 	const role = localStorage.getItem("role");
 	console.log(username, role);
-	fetch("/auth", {
+	fetch("/user/auth", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
@@ -22,7 +22,7 @@ function signIn() {
 	const username = form.username.value;
 	const password = form.password.value;
 	const role = form.role.value;
-	fetch("/", {
+	fetch("/user", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
