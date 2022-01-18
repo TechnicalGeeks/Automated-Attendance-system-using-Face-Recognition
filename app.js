@@ -10,12 +10,7 @@ const courseRouter = require("./routes/course");
 const studentRouter = require("./routes/student");
 const lectureRouter = require("./routes/lecture");
 
-// Data Model
-const User = require("./models/User");
-const Course = require("./models/Course");
-const Subject = require("./models/Subject");
-const Student = require("./models/Student");
-const Lecture = require("./models/Lecture");
+
 // Express App
 const app = express();
 

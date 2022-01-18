@@ -21,7 +21,34 @@ const post_lecture_create=(req,res)=>{
 	});
 };
 
+const get_lecture_all=async (req,res)=>{
+	
+	Lecture.find({}).then((result)=>{
+		console.log(result);
+		getCourseDetails(result).then((lectures)=>{
+		console.log("##final",lectures);
+		res.render('Lecture/allLectures',{title:'All Lectures',lectures:lectures});
+		});
+	});
+};
+
+const getCourseDetails=async (lectures)=>{
+	
+	for (let i = 0; i < lectures.length; i++) {
+		let course=await Course.find({id:lectures[i].courseId}).then((course)=>{return course});
+		console.log("##"+i,course);
+		lectures[i].branch=await course.branch;
+		lectures[i]['year']=await course.year;
+		lectures[i]['sem']=await course.sem;
+		lectures[i]['division']=await course.division;
+		console.log("##for",lectures[i]);
+	}
+	console.log("##getCourseDetails",lectures);
+	return lectures;
+}
+
 module.exports={
   get_lecture_create,
-  post_lecture_create
+  post_lecture_create,
+	get_lecture_all
 };

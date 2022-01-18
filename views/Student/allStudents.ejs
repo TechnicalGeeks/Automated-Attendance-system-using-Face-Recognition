@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../.Partials/header') %>
+<body>
+    <%- include('../.Partials/nav') %>
+    <div class="content">
+        <!-- component -->
+        <section class="container mx-auto p-6 font-mono">
+            <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full">
+                <thead>
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                    <th class="px-4 py-3">ID</th>
+                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Course Id</th>
+                    <th class="px-4 py-3">Roll No.</th>
+                    <th class="px-4 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white bg-opacity-50">
+                    <%  let branch={
+                            "cs":"Computer Science",
+                            "it":"Information Technology",
+                            "entc":"Electronic and Telecommunication Engineering"
+                        };
+                        let color={
+                            0:"text-red-700 bg-red-100",
+                            1:"text-green-700 bg-green-100"
+                        };
+                    %>
+                    
+                    <% Students.forEach(student => { 
+                      
+                    %>
+                        <tr class="text-gray-700">
+                            <td class="px-4 py-3 border">
+                                <div class="flex items-center text-sm">
+                                  <p class="font-semibold text-black"><%= student.id %></p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <div class="flex items-center text-sm">
+                                    <p class="font-semibold text-black"><%= student.fname+" "+student.mname[0]+". "+student.lname %></p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <div class="flex items-center text-sm">
+                                    <p class="font-semibold text-black"><%= student.courseId %></p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <div class="flex items-center text-sm">
+                                    <p class="font-semibold text-black"><%= student.rollNo %></p>
+                                  </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm border">
+                                <a href="/student/<%= student._id %>" class="text-yellow-400 hover:text-gray-100 mx-2" title="View And Edit User">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a href="/student/delete/<%= student._id %>"class="text-red-400 hover:text-gray-100 ml-2" title="Delete User">
+                                    <i class="fas fa-trash-alt"></i>                
+                                </a>
+                            </td>
+                        </tr>
+                    <% }); %> 
+                    
+                </tbody>
+                </table>
+            </div>
+            </div>
+        </section>
+    </div>
+    <%- include('../.Partials/footer') %>
+    <script>
+        if(localStorage.getItem('role')!=1){
+            window.location.replace('/home')
+        }
+        function update(id) {
+            let branch=document.getElementById("branch#"+id).value;
+            let year=document.getElementById("year#"+id).value;
+            let sem=document.getElementById("sem#"+id).value;
+            let div=document.getElementById("div#"+id).value;
+            fetch("/course/update",{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({id:id,branch:branch,year:year,sem:sem,division:div})
+            }).then(response=>response.json())
+            .then((data)=>{
+                if(data.error){
+                    console.log(data.error);
+                }
+                if(data.status==1){
+                    window.location.reload();
+                }
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+    </script> 
+</body> 
+</html>

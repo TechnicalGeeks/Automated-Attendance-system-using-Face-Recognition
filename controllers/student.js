@@ -28,6 +28,25 @@ const post_student_add=(req,res)=>{
 	});
 };
 
+const get_student_all=(req,res)=>{
+	Student.find().then((students)=>{
+		console.log(students.length);
+		res.render('Student/allStudents',{title:'Students',Students:students});
+	});
+};
+
+const get_student_delete=(req,res)=>{
+	let id=req.params.id;
+	Student.findByIdAndDelete(id).then((result)=>{
+		console.log(result);
+		res.redirect('/student/all');
+	});
+};
+
+const get_student_edit=(req,res)=>{
+	console.log(req.params.id);
+}
+
 const getStudentId=async ()=>{
 	return Student.find().sort({createdAt:-1}).limit(1).then((lastStudent)=>{
 		console.log("##lastStudent",lastStudent);
@@ -39,5 +58,8 @@ const getStudentId=async ()=>{
 
 module.exports={
   get_student_add,
-  post_student_add
+  post_student_add,
+	get_student_all,
+	get_student_delete,
+	get_student_edit
 };

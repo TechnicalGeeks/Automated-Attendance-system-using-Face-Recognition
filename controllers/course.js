@@ -22,7 +22,7 @@ const post_course_add=(req,res)=>{
 			newCourse=new Course(data);
 			newCourse.save().then((result)=>{
 			console.log(result);
-			res.redirect("/add");
+			res.redirect("/course/add");
 		});
 		})
 		
@@ -58,7 +58,7 @@ const get_course_delete=(req,res)=>{
 	let id=req.params.id;
 	Course.findByIdAndDelete(id).then((result)=>{
 		console.log(result);
-		res.redirect("/all");
+		res.redirect("/course/all");
 	});
 };
 
