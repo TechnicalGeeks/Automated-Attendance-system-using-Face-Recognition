@@ -45,7 +45,7 @@
                             </td>
                             <td class="px-4 py-3 text-ms font-semibold border">
                                 <div class="flex items-center text-sm">
-                                    <p class="font-semibold text-black"><%= lecture.subject%></p>
+                                    <input class="font-semibold text-black" type="text" name="subject" id="subject<%= lecture._id%>" value="<%= lecture.subject%>">
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-ms font-semibold border">
@@ -103,6 +103,7 @@
             window.location.replace('/home')
         }
         function update(id) {
+            let subject=document.getElementById('subject'+id).value;
             let branch=document.getElementById("branch#"+id).value;
             let year=document.getElementById("year#"+id).value;
             let sem=document.getElementById("sem#"+id).value;
@@ -112,7 +113,7 @@
                 headers:{
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify({id:id,branch:branch,year:year,sem:sem,division:div})
+                body: JSON.stringify({id:id,branch:branch,year:year,sem:sem,division:div,subject:subject})
             }).then(response=>response.json())
             .then((data)=>{
                 if(data.error){

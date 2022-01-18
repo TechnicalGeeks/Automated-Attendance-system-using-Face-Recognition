@@ -32,11 +32,26 @@ const get_lecture_all=async (req,res)=>{
 	});
 };
 
+const get_lecture_delete=(req,res)=>{
+	let id=req.params.id;
+	Lecture.findByIdAndDelete(id).then((result)=>{
+		console.log(result);
+		res.json({status:1});
+	});
+};
+
+const post_lecture_update=(req,res)=>{
+	console.log(req.body);
+	
+
+}
+
 const getCourseDetails=async (lectures)=>{
 	
 	for (let i = 0; i < lectures.length; i++) {
 		let course=await Course.find({id:lectures[i].courseId}).then((course)=>{return course});
 		console.log("##"+i,course);
+		course=course[0];
 		lectures[i].branch=await course.branch;
 		lectures[i]['year']=await course.year;
 		lectures[i]['sem']=await course.sem;
@@ -50,5 +65,7 @@ const getCourseDetails=async (lectures)=>{
 module.exports={
   get_lecture_create,
   post_lecture_create,
-	get_lecture_all
+	get_lecture_all,
+	get_lecture_delete,
+	post_lecture_update
 };
