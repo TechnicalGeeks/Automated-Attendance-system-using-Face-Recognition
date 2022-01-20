@@ -34,12 +34,12 @@
                     %>
                     
                     <% courses.forEach(course => { 
-                      course.subjects.forEach(id => {id=subjects[id]});
-                      let subject="";
-                      for (let i = 0; i < course.subjects.length; i++) {
-                        subject+=course.subjects[i]+" ";
-                        
-                      }
+                    //   course.subjects.forEach(id => {id=subjects[id]});
+                        let subject="";  
+                        for (let i = 0; i < course.subjects.length; i++) {
+                          course.subjects[i]=subjects[course.subjects[i]];
+                          subject+=course.subjects[i]+" ";
+                        }
                     %>
                         <tr class="text-gray-700">
                             <td class="px-4 py-3 border">
