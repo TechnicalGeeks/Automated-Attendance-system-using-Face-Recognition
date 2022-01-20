@@ -42,7 +42,7 @@
                             </td>
                             <td class="px-4 py-3 text-ms font-semibold border">
                                 <div class="flex items-center text-sm">
-                                    <p class="font-semibold text-black"><%= student.fname+" "+student.mname[0]+". "+student.lname %></p>
+                                    <input type="text" class="font-semibold text-black" id="name#<%= student._id %>" name="name" value="<%= student.fname+" "+student.mname+" "+student.lname %>" >
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-ms font-semibold border">
@@ -52,12 +52,12 @@
                             </td>
                             <td class="px-4 py-3 text-ms font-semibold border">
                                 <div class="flex items-center text-sm">
-                                    <p class="font-semibold text-black"><%= student.rollNo %></p>
+                                    <input type="text" class="font-semibold text-black" id="rollNo#<%= student._id %>" name="rollNo" value="<%= student.rollNo %>" >
                                   </div>
                             </td>
                             <td class="px-4 py-3 text-sm border">
-                                <a href="/student/<%= student._id %>" class="text-yellow-400 hover:text-gray-100 mx-2" title="View And Edit User">
-                                    <i class="fas fa-pencil-alt"></i>
+                                <a class="text-green-500 hover:text-green-100 mr-2" onclick="update('<%= student._id %>')" title="Update Role">
+                                    <i class="fas fa-upload" ></i>
                                 </a>
                                 <a href="/student/delete/<%= student._id %>"class="text-red-400 hover:text-gray-100 ml-2" title="Delete User">
                                     <i class="fas fa-trash-alt"></i>                
@@ -78,16 +78,14 @@
             window.location.replace('/home')
         }
         function update(id) {
-            let branch=document.getElementById("branch#"+id).value;
-            let year=document.getElementById("year#"+id).value;
-            let sem=document.getElementById("sem#"+id).value;
-            let div=document.getElementById("div#"+id).value;
-            fetch("/course/update",{
+            let rollNo=document.getElementById("rollNo#"+id).value;
+            let name=document.getElementById("name#"+id).value;
+            fetch("/student/update",{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify({id:id,branch:branch,year:year,sem:sem,division:div})
+                body: JSON.stringify({id:id,rollNo:rollNo,name:name})
             }).then(response=>response.json())
             .then((data)=>{
                 if(data.error){

@@ -43,8 +43,34 @@ const get_student_delete=(req,res)=>{
 	});
 };
 
-const get_student_edit=(req,res)=>{
-	console.log(req.params.id);
+const post_student_update=(req,res)=>{
+	let data=req.body;
+	console.log(data);
+	const branch={
+		"CO":"cs",
+		"IT":"it",
+		"EC":"entc",
+	}
+	const newData={
+		year:data.rollNo.slice(0,2),
+		branch:branch[data.rollNo.slice(2,4)],
+		division:data.rollNo[4],
+	}
+	console.log(newData);
+	Course.find(newData).then((course)=>{
+		console.log("##",course);
+		const finalData={
+			"fname":data.name.split(' ')[0],
+			"mname":data.name.split(' ')[1],
+			"lname":data.name.split(' ')[2],
+			"courseId":course[0].id,
+			"rollNo":data.rollNo
+		}
+		Student.findByIdAndUpdate(data.id,{$set:finalData}).then((result)=>{
+			console.log(result);
+			res.json({status:1});
+		});
+	});
 }
 
 const getStudentId=async ()=>{
@@ -61,5 +87,5 @@ module.exports={
   post_student_add,
 	get_student_all,
 	get_student_delete,
-	get_student_edit
+	post_student_update
 };

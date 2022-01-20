@@ -10,6 +10,6 @@ router.get("/all",Student.get_student_all);
 
 router.get('/delete/:id',Student.get_student_delete);
 
-router.get('/edit/:id',Student.get_student_edit);
+router.post('/update',Student.post_student_update);
 
 module.exports=router;
