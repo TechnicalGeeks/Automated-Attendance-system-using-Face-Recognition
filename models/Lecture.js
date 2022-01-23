@@ -9,6 +9,10 @@ const LectureSchema= new Schema({
   courseId:{
     type: String,
     required:true,
+  },
+  room:{
+    type: String,
+    required:true,
   }
 
 },{timestamps:true});

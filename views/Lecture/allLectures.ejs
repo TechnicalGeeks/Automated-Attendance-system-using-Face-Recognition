@@ -18,6 +18,7 @@
                     <th class="px-4 py-3">Year</th>
                     <th class="px-4 py-3">Semester</th>
                     <th class="px-4 py-3">Division</th>
+                    <th class="px-4 py-3">Room No.</th>
                     <th class="px-4 py-3">Date</th>
                     <th class="px-4 py-3">Action</th>
                     </tr>
@@ -83,6 +84,11 @@
                             </td>
                             <td class="px-4 py-3 border">
                                 <div class="flex items-center text-sm">
+                                    <input class="font-semibold text-black" type="text" name="room" id="room<%= lecture._id%>" value="<%= lecture.room%>">
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 border">
+                                <div class="flex items-center text-sm">
                                     <p class="font-semibold text-black"><%= lecture.createdAt %></p>
                                 </div>
                             </td>
@@ -114,6 +120,7 @@
             let year=document.getElementById("year#"+id).value;
             let sem=document.getElementById("sem#"+id).value;
             let div=document.getElementById("div#"+id).value;
+            let room=document.getElementById("room"+id).value;
             fetch("/lecture/update",{
                 method:'POST',
                 headers:{

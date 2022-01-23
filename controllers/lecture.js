@@ -44,7 +44,7 @@ const post_lecture_update=(req,res)=>{
 	console.log(req.body);
 	let data=req.body;
 	Course.find({branch:data.branch,year:data.year,sem:data.sem,div:data.div}).then((course)=>{
-		Lecture.findByIdAndUpdate(data.id,{$set:{courseId:course[0].id,subject:data.subject}}).then((result)=>{
+		Lecture.findByIdAndUpdate(data.id,{$set:{courseId:course[0].id,subject:data.subject,room:data.room}}).then((result)=>{
 			console.log(result);
 			res.json({status:1});
 		});
