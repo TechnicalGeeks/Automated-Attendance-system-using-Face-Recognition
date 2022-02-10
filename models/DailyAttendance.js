@@ -1,22 +1,23 @@
 const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 
-const AttendanceSchema= new Schema({
+const DailyAttendanceSchema= new Schema({
   studentId:{
     type: String,
     required:true,
   },
-  courseId:{
+  lectureId:{
     type: String,
     required:true,
   },
-  subjects:[{
+  Attendance:{
     type: String,
     required:true,
-  }]
+    default: 'A'
+  }
   
 },{timestamps:true});
 
-const Attendance=mongoose.model('attendance',AttendanceSchema);
+const DailyAttendance=mongoose.model('dailyattendance',DailyAttendanceSchema);
 
-module.exports=Attendance;
+module.exports=DailyAttendance;
