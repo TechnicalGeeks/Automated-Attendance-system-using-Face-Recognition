@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../.Partials/header.ejs') %>
+<body>
+    <%- include('../.Partials/nav.ejs') %> 
+
+    <div class="content">
+      <!-- component -->
+      <section class="container mx-auto p-6 font-mono">
+          <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+          <div class="w-full overflow-x-auto">
+            <form action="/dailyattendance/update/<%= lectureId %> " method="post">
+              <table class="w-full">
+                <thead>
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                    <th class="px-4 py-3">Student ID</th>
+                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Attendance</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white bg-opacity-50">
+                    
+                    <% attendances.forEach(attendance => { 
+                      
+                    %>
+                        <tr class="text-gray-700">
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <div class="flex items-center text-sm">
+                                  <p class="font-semibold text-black"><%= attendance.studentId %></p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <div class="flex items-center text-sm">
+                                  <p class="font-semibold text-black"><%= attendance.student[0].fname+" "+attendance.student[0].lname %></p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                                <select name="<%= attendance._id %>" id="<%= attendance._id %>">
+                                    <option value="<%= attendance.Attendance %>"><%= attendance.Attendance %> (Current) </option>
+                                    <option value="P" >P</option>
+                                    <option value="A"  >A</option>
+                                </select>
+                            </td>
+                        </tr>
+                    <% }); %> 
+                    
+                </tbody>
+              </table>
+              <div class="flex flex-wrap -mx-auto mb-6 text-center">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">Submit</button>
+                </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <a><button class="m-2  text-black bg-white border-2 border-black py-2 px-5 focus:outline-none hover:bg-black hover:text-white rounded">Cancel</button></a>       
+                </div>
+              </div>
+            </form>
+          </div>
+          </div>
+      </section>
+  </div>
+  <%- include('../.Partials/footer.ejs') %> 
+</body>
+</html>

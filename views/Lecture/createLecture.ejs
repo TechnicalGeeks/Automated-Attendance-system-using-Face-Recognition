@@ -6,7 +6,7 @@
     <%- include('../.Partials/nav.ejs') %> 
 
     <div class="content">
-      <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" action="/lecture/create" method="POST">
+      <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" >
           <h2 class="title-font text-2xl font-medium mx-auto mt-6 mb-6 text-center">Create Lecture</h2>
           <div class="flex flex-wrap -mx-auto mb-6">
             
@@ -71,18 +71,81 @@
          
           <div class="flex flex-wrap -mx-auto mb-6 text-center">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">Submit</button>
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" onclick="create(event)">Submit</button>
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <a><button class="m-2  text-black bg-white border-2 border-black py-2 px-5 focus:outline-none hover:bg-black hover:text-white rounded">Cancel</button></a>       
             </div>
           </div>
+          <div class="attendanceButton flex flex-wrap -mx-auto mb-6 text-center" style="display:none">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" >Automatic</button>
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" onclick="manualAttendance(event)">Manual</button>      
+            </div>
+          </div>
       </form>
+      
+
     </div>
 
 
     <%- include('../.Partials/footer.ejs') %> 
 
+  <script>
+    let branch="";
+    let sem="";
+    let year="";
+    let div="";
+    let subject="";
+    let room="";
+    let lecture=""
+
+    function create(event) {
+      event.preventDefault();
+      branch=document.getElementById("branch").value;
+      sem=document.getElementById("sem").value;
+      year=document.getElementById("year").value;
+      div=document.getElementById("div").value;
+      subject=document.getElementById("subject").value;
+      room=document.getElementById("room").value;
+      if(branch=="" || sem=="" || year=="" || div=="" || subject=="" || room==""){
+        alert("Please fill all the fields");
+        return
+      }
+      let data={
+        branch:branch,
+        sem:sem,
+        year:year,
+        div:div,
+        subject:subject,
+        room:room
+      }
+      fetch('/lecture/create',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+      }).then(res=>res.json())
+      .then((data)=>{
+        if(data.status=="1"){
+          alert("Lecture Added Successfully");
+          lecture=data.lecture;
+          let attendanceButton=document.getElementsByClassName("attendanceButton");
+          attendanceButton[0].style.display="flex";
+        }
+        if(data.error){
+          console.log(data.error);
+        }
+      })
+    }
   
+    function manualAttendance(event){
+      event.preventDefault();
+      window.location.href="/dailyattendance/get/"+lecture;
+    }
+  </script>
 </body>
 </html>

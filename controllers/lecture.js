@@ -25,7 +25,8 @@ const post_lecture_create=(req,res)=>{
 						console.log("##Daily Attendance Created "+student.id+" "+lecture.id);
 					});
 				});
-				res.redirect(process.env.model+"/lecture/create");
+				// res.redirect(process.env.model+"/lecture/create");
+				res.json({status:1,lecture:lecture.id})
 			});
 		})
 	});
