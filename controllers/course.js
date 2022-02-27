@@ -18,6 +18,7 @@ const post_course_add=(req,res)=>{
 		getCourseId().then((courseId)=>{
 			console.log("###Course Id",courseId);
 			data["id"]=courseId;
+			data["count"]=[0,0,0,0,0];
 			console.log(data);
 			newCourse=new Course(data);
 			newCourse.save().then((result)=>{
@@ -66,8 +67,8 @@ const addSubjects=async (subjects)=>{
 	console.log(subjects);
 	
 	for (let i = 0; i < subjects.length; i++) { 
-		if (subjects[i][0]==="z"){
-			subjects[i]=await parseInt(subjects[i].substr(1,subjects[i].length));
+		if (subjects[i][0]==="#"){
+			subjects[i]=subjects[i].substr(1,subjects[i].length);
 		}
 		else{
 			let id= await Subject.findOne().sort({createdAt:-1}).then((lastSubject)=>{
@@ -80,7 +81,7 @@ const addSubjects=async (subjects)=>{
 			let newSubject=new Subject({id:id,name:subjects[i]});
 			await newSubject.save().then((response)=>{
 				console.log(response);
-				subjects[i]=id;
+				// subjects[i]=id;
 			});
 		}
 	};

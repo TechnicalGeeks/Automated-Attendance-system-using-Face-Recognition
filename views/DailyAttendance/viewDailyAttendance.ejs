@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../.Partials/header.ejs') %>
+<body>
+    <%- include('../.Partials/nav.ejs') %> 
+
+    <div class="content">
+      <!-- component -->
+      <section class="container mx-auto p-6 font-mono">
+          <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+          <div class="w-full overflow-x-auto">
+            <table class="w-full">
+              <form action="" method="post">
+                <tr>
+                  <td class="p-2">
+                    <label for="date" class="text-sm font-semibold">Date</label>
+                    <input type="date" name="date" id="date" class="w-full p-2 border border-gray-400 rounded-lg">
+                  </td>
+                  <td class="p-2">
+                    <label for="subject" class="text-sm font-semibold">Subject</label>
+                    <input type="text" name="subject" id="subject" class="w-full p-2 border border-gray-400 rounded-lg">
+                  </td>
+                  <td class="p-2">
+                    <label for="studentId" class="text-sm font-semibold">StudentId</label>
+                    <input type="text" name="studentId" id="studentId" class="w-full p-2 border border-gray-400 rounded-lg">
+                  </td>
+                  <td class="p-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                      Search
+                    </button>
+                  </td>
+                </tr>
+              </form>
+              <thead>
+                  <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                  <th class="px-4 py-3">Student ID</th>
+                  <th class="px-4 py-3">Name</th>
+                  <th class="px-4 py-3">Roll No.</th>
+                  <th class="px-4 py-3">Subject</th>
+                  <th class="px-4 py-3">Date</th>                  
+                  <th class="px-4 py-3">Attendance</th>
+                  </tr>
+              </thead>
+              <tbody class="bg-white bg-opacity-50">
+                  
+                  <% attendances.forEach(attendance => { 
+                    
+                  %>
+                      <tr class="text-gray-700">
+                          <td class="px-4 py-3 text-ms font-semibold border">
+                              <div class="flex items-center text-sm">
+                                <p class="font-semibold text-black"><%= attendance.studentId %></p>
+                              </div>
+                          </td>
+                          <td class="px-4 py-3 text-ms font-semibold border">
+                              <div class="flex items-center text-sm">
+                                <p class="font-semibold text-black"><%= attendance.student[0].fname+" "+attendance.student[0].lname %></p>
+                              </div>
+                          </td>
+                          <td class="px-4 py-3 text-ms font-semibold border">
+                            <p class="font-semibold text-black"><%= attendance.student[0].rollNo %></p>
+                          </td>
+                          <td class="px-4 py-3 text-ms font-semibold border">
+                            <p class="font-semibold text-black"><%= attendance.lecture[0].subject %></p>
+                          </td>
+                          <td class="px-4 py-3 text-ms font-semibold border">
+                            <p class="font-semibold text-black"><%= attendance.lecture[0].createdAt %></p>
+                          </td>
+                          <td class="px-4 py-3 text-ms font-semibold border">
+                            <p class="font-semibold text-black"><%= Attendance.attendance %></p>
+                          </td>
+
+                      </tr>
+                  <% }); %> 
+                  
+              </tbody>
+            </table>
+          </div>
+          </div>
+      </section>
+  </div>
+  <%- include('../.Partials/footer.ejs') %> 
+</body>
+</html>

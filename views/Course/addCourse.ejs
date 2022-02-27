@@ -54,7 +54,7 @@
                     <option value="">Enter Subject</option>
                     <% if(subjects){ %> 
                     <% subjects.forEach(subject => {%>
-                      <option value="z<%=subject.id%>" ><%= subject.name%></option>
+                      <option value="#<%=subject.name%>" ><%= subject.name%></option>
                     <% });} %> 
                     <option value="0">Other</option>
                   </select>

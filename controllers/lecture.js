@@ -11,14 +11,21 @@ const post_lecture_create=(req,res)=>{
 	console.log(req.body);
 	let data=req.body;
 	Course.find({branch:data.branch,year:data.year,sem:data.sem,division:data.div}).then((course)=>{
+		course=course[0]
 		console.log(course);
-		console.log("##Course Id",course[0].id);
-		data.courseId=course[0].id;
+		console.log("##Course Id",course.id);
+		data.courseId=course.id;
 		['branch','year','sem','div'].forEach((key)=>delete data[key]);
-		console.log("###No ID",data);
+		console.log("###No ID",data,course);
+		let index=course.subjects.indexOf(data.subject);
+		console.log(index);
+		course.count[index]++;
+		Course.updateOne({id:course.id},{$set:{subjects:course.subjects,count:course.count}}).then(()=>{
+			console.log("Subject's Lecture Count Increased");
+		});
 		new Lecture(data).save().then((lecture)=>{
 			console.log("Lecture",lecture);
-			Student.find({courseId:course[0].id}).then((students)=>{
+			Student.find({courseId:course.id}).then((students)=>{
 				console.log("Students",students);
 				students.forEach((student)=>{
 					new DailyAttendance({studentId:student.id,lectureId:lecture.id}).save().then(()=>{

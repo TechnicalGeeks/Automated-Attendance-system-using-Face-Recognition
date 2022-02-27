@@ -13,6 +13,7 @@ const AttendanceSchema= new Schema({
   subjects:[{
     type: String,
     required:true,
+    default:0
   }]
   
 },{timestamps:true});

@@ -1,5 +1,6 @@
 const Student= require('../models/Student');
 const Course = require('../models/Course');
+const Attendance=require('../models/Attendance');
 
 const get_student_add=(req,res)=>{
 	res.render("Student/addStudent",{title:"Add Student"});
@@ -21,6 +22,11 @@ const post_student_add=(req,res)=>{
 			newStudent=new Student(data);
 			newStudent.save().then((result)=>{
 			console.log(result);
+			new Attendance({
+				studentId:result.id,
+				courseId:result.courseId,
+				subjects:[0,0,0,0,0]
+			})
 			res.redirect("/student/add");
 		});
 		})
