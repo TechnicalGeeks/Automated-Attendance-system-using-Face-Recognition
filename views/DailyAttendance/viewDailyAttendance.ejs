@@ -62,13 +62,13 @@
                             <p class="font-semibold text-black"><%= attendance.student[0].rollNo %></p>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.lecture[0].subject %></p>
+                            <p class="font-semibold text-black"><%= attendance.lecture[0]  && attendance.lecture[0].subject %></p>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.lecture[0].createdAt %></p>
+                            <p class="font-semibold text-black"><%= attendance.lecture[0] && attendance.lecture[0].createdAt %></p>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= Attendance.attendance %></p>
+                            <p class="font-semibold text-black"><%= attendance.Attendance %></p>
                           </td>
 
                       </tr>

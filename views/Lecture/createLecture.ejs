@@ -79,7 +79,7 @@
           </div>
           <div class="attendanceButton flex flex-wrap -mx-auto mb-6 text-center" style="display:none">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" >Automatic</button>
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" onclick="automaticAttendance(event)" >Automatic</button>
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" onclick="manualAttendance(event)">Manual</button>      
@@ -145,6 +145,27 @@
     function manualAttendance(event){
       event.preventDefault();
       window.location.href="/dailyattendance/get/"+lecture;
+    }
+
+    function automaticAttendance(event){
+      event.preventDefault();
+      fetch('http://127.0.0.1:3011/recognize',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({branch:branch,div:div,year:year,lectureID:lecture})
+      }).then(res=>res.json())
+      .then((data)=>{
+        if(data.status=="1"){
+          alert("Attendance Added Successfully");
+          window.location.href="/dailyattendance/get/"+lecture;
+        }
+        if(data.error){
+          console.log(data.error);
+        }
+      })
+      
     }
   </script>
 </body>

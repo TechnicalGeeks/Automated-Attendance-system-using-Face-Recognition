@@ -7,6 +7,7 @@ def storeAttendance(studentAttendances,lectureID):
   my_collection=db["dailyattendances"]
   print(studentAttendances)
   finalAttendance=MarkAttendance.MarkAttendance(studentAttendances)
+  print(finalAttendance)
   for id in finalAttendance:
     my_collection.update_one({"studentId":id,"lectureId":lectureID},{"$set":{"Attendance":"P"}})
 

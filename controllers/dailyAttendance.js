@@ -75,7 +75,28 @@ const post_dailyAttendance_update=async (req,res)=>{
   
 }
 
+const get_dailyAttendance_all= (req,res)=>{
+  DailyAttendance.aggregate([{$lookup:{
+      from:'students',
+      localField:'studentId',
+      foreignField:'id',
+      as:'student'
+    }},
+    {$lookup:{
+      from:'lectures',
+      localField:'lectureId',
+      foreignField:'_id',
+      as:'lecture'
+    }},
+    {$match:{}},
+  ]).then((result)=>{
+    console.log(result[0]);
+    res.render('DailyAttendance/viewDailyAttendance',{title:'Daily Attendance',attendances:result});
+  })
+}
+
 module.exports={
   get_dailyAttendance_get,
+  get_dailyAttendance_all,
   post_dailyAttendance_update
 }

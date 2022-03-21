@@ -7,18 +7,18 @@ from datetime import timedelta
 from numpy import load
 
 studentAttendances={}
-def recognize(branch,year,division,firstCamera=0,secondCamera='https://192.168.65.27:8080/video',lectureTime=0.015):
+def recognize(branch,year,division,firstCamera=0,secondCamera='https://192.168.15.25:8080/video',lectureTime=0.015):
     
     classNames = []
     encodeListKnown=[]
 
-    path="training_images"+"/"+branch+"/"+year+"/"+division+"/"
+    path="./Training_images"+"/"+branch+"/"+year+"/"+division+"/"
     myList = os.listdir(path)
 
     for cl in myList:
         classNames.append(os.path.splitext(cl)[0])
     
-    models="Trained_Models"+"/"+branch+"/"+year+"/"+division+"/"+"model.npz"
+    models="./Trained_Models"+"/"+branch+"/"+year+"/"+division+"/"+"model.npz"
 
     data = load(models)
     encodeListKnown= data['arr_0']

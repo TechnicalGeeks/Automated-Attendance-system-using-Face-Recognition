@@ -2,6 +2,7 @@ const Course= require('../models/Course');
 const Lecture= require('../models/Lecture');
 const Student= require('../models/Student');
 const DailyAttendance=require('../models/DailyAttendance');
+const mongoose=require('mongoose');
 
 const get_lecture_create=(req,res)=>{
 	res.render('Lecture/createLecture',{title:'Create Lecture'});
@@ -28,7 +29,7 @@ const post_lecture_create=(req,res)=>{
 			Student.find({courseId:course.id}).then((students)=>{
 				console.log("Students",students);
 				students.forEach((student)=>{
-					new DailyAttendance({studentId:student.id,lectureId:lecture.id}).save().then(()=>{
+					new DailyAttendance({studentId:student.id,lectureId:mongoose.mongo.ObjectId(lecture.id)}).save().then(()=>{
 						console.log("##Daily Attendance Created "+student.id+" "+lecture.id);
 					});
 				});

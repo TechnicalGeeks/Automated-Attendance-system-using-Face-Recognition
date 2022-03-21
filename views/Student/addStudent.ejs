@@ -6,7 +6,7 @@
     <%- include('../.Partials/nav.ejs') %> 
 
     <div class="content">
-      <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" action="/student/add" method="POST">
+      <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70">
           <h2 class="title-font text-2xl font-medium mx-auto mt-6 mb-6 text-center">Add Student</h2>
           <div class="flex flex-wrap -mx-auto mb-6">
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-6">
@@ -82,10 +82,15 @@
          
           <div class="flex flex-wrap -mx-auto mb-6 text-center">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">Submit</button>
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" onclick="create(event)">Submit</button>
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <a><button class="m-2  text-black bg-white border-2 border-black py-2 px-5 focus:outline-none hover:bg-black hover:text-white rounded">Cancel</button></a>       
+            </div>
+          </div>
+          <div class="CaptureButton flex flex-wrap -mx-auto mb-6 text-center" style="display:none">
+            <div class="w-full text-center px-3 mb-6 md:mb-0">
+              <button class="m-2  text-white bg-blue-500 border-2 border-white py-2 px-5 focus:outline-none hover:bg-blue-600 rounded" onclick="captureStudent(event)" >Capture</button>
             </div>
           </div>
       </form>
@@ -108,6 +113,79 @@
       }
       
     }
+    let fname="";
+    let mname="";
+    let lname="";
+    let branch="";
+    let sem="";
+    let year="";
+    let div="";
+    let rollNo="";
+    function create(event) {
+      event.preventDefault();
+      branch=document.getElementById("branch").value;
+      sem=document.getElementById("sem").value;
+      year=document.getElementById("year").value;
+      div=document.getElementById("div").value;
+      rollNo=document.getElementById("rollNo").value;
+      fname=document.getElementById("fname").value;
+      mname=document.getElementById("mname").value;
+      lname=document.getElementById("lname").value;
+      if(branch=="" || sem=="" || year=="" || div=="" || fname=="" || mname=="" || lname=="" || rollNo=="" ){
+        alert("Please fill all the fields");
+        return
+      }
+      let data={
+        branch:branch,
+        sem:sem,
+        year:year,
+        div:div,
+        fname:fname,
+        mname:mname,
+        lname:lname,
+        rollNo:rollNo
+      }
+      fetch('/student/add',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+      }).then(res=>res.json())
+      .then((data)=>{
+        if(data.status=="1"){
+          alert("Student Added Successfully");
+          student=data.student;
+          let captureButton=document.getElementsByClassName("CaptureButton");
+          captureButton[0].style.display="flex";
+        }
+        if(data.error){
+          console.log(data.error);
+        }
+      })
+    }
+
+    function captureStudent(event){
+      event.preventDefault();
+      fetch('http://127.0.0.1:3011/store',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({branch:branch,div:div,year:year,studentID:student})
+      }).then(res=>res.json())
+      .then((data)=>{
+        if(data.status=="1"){
+          alert("Attendance Added Successfully");
+          window.location.reload();
+        }
+        if(data.error){
+          console.log(data.error);
+        }
+      })
+      
+    }
+  
   </script>
 </body>
 </html>

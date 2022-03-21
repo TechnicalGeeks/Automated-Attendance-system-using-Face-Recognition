@@ -32,16 +32,8 @@ const post_course_add=(req,res)=>{
 
 const get_course_all=(req,res)=>{
 	Course.find().then((courses)=>{
-		let subjects={};
-		Subject.find().then((result)=>{
-			for (let i = 0; i < result.length; i++) {
-				subjects[result[i].id]=result[i].name;
-				
-			}
-			console.log(courses,subjects);
-			res.render('Course/allCourses',{title:'Course',courses:courses,subjects:subjects});
+		res.render('Course/allCourses',{title:'Course',courses:courses});
 		});
-	});
 };
 
 const post_course_update=(req,res)=>{
@@ -76,6 +68,7 @@ const addSubjects=async (subjects)=>{
 				if(lastSubject){
 					id=parseInt(lastSubject.id)+1;
 				}
+				console.log(id);
 				return id;
 			});
 			let newSubject=new Subject({id:id,name:subjects[i]});

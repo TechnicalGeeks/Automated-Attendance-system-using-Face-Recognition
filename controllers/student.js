@@ -18,7 +18,7 @@ const post_student_add=(req,res)=>{
 		getStudentId().then((studentId)=>{
 			console.log(studentId);
 			data.id=studentId;
-			console.log("##FInal Data",data);
+			console.log("##Final Data",data);
 			newStudent=new Student(data);
 			newStudent.save().then((result)=>{
 			console.log(result);
@@ -27,8 +27,11 @@ const post_student_add=(req,res)=>{
 				courseId:result.courseId,
 				subjects:[0,0,0,0,0]
 			})
-			res.redirect("/student/add");
-		});
+			res.json({status:1,student:result.id});
+		})
+		.catch((err)=>{
+			res.json({status:0,error:err})
+		})
 		})
 		
 	});
