@@ -9,7 +9,7 @@ const get_student_add=(req,res)=>{
 const post_student_add=(req,res)=>{
 	console.log(req.body);
 	let data=req.body;
-	Course.find({branch:data.branch,year:data.year,sem:data.sem,div:data.div}).then((course)=>{
+	Course.find({branch:data.branch,year:data.year,sem:data.sem,division:data.div}).then((course)=>{
 		console.log(course);
 		console.log("##COurse Id",course[0].id);
 		data.courseId=course[0].id;
@@ -26,8 +26,11 @@ const post_student_add=(req,res)=>{
 				studentId:result.id,
 				courseId:result.courseId,
 				subjects:[0,0,0,0,0]
+			}).save().then((Attendance)=>{
+				console.log("##Attendance",Attendance);
+				res.json({status:1,student:result.id});
 			})
-			res.json({status:1,student:result.id});
+			
 		})
 		.catch((err)=>{
 			res.json({status:0,error:err})
