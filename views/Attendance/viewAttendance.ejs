@@ -37,16 +37,17 @@
                   <th class="px-4 py-3">Student ID</th>
                   <th class="px-4 py-3">Name</th>
                   <th class="px-4 py-3">Roll No.</th>
-                  <th class="px-4 py-3">Subject</th>
-                  <th class="px-4 py-3">Date</th>                  
-                  <th class="px-4 py-3">Attendance</th>
+                  <th class="px-4 py-3">Subjects</th>
+                  <th class="px-4 py-3">1</th>                  
+                  <th class="px-4 py-3">2</th>
+                  <th class="px-4 py-3">3</th>    
+                  <th class="px-4 py-3">4</th>    
+                  <th class="px-4 py-3">5</th>        
                   </tr>
               </thead>
               <tbody class="bg-white bg-opacity-50">
                   
-                  <% attendances.forEach(attendance => { 
-                    
-                  %>
+                  <% attendances.forEach(attendance => { %>
                       <tr class="text-gray-700">
                           <td class="px-4 py-3 text-ms font-semibold border">
                               <div class="flex items-center text-sm">
@@ -55,22 +56,20 @@
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
                               <div class="flex items-center text-sm">
-                                <p class="font-semibold text-black"><%= attendance.student[0].fname+" "+attendance.student[0].mname[0]+". "+attendance.student[0].lname %></p>
+                                <p class="font-semibold text-black"><%=attendance.student[0]  && attendance.student[0].fname+" "+attendance.student[0].mname[0]+". "+attendance.student[0].lname %></p>
                               </div>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.student[0].rollNo %></p>
+                            <p class="font-semibold text-black"><%= attendance.student[0]  && attendance.student[0].rollNo %></p>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.lecture[0]  && attendance.lecture[0].subject %></p>
+                            <p class="font-semibold text-black"><%= attendance.course[0]  && attendance.course[0].subjects %></p>
                           </td>
-                          <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.lecture[0] && attendance.lecture[0].createdAt %></p>
-                          </td>
-                          <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.Attendance %></p>
-                          </td>
-
+                          <%attendance.subjects.forEach((subject,index)=>{%>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                              <p class="font-semibold text-black"><%= subject %></p>
+                            </td>
+                          <%})%>
                       </tr>
                   <% }); %> 
                   

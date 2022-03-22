@@ -10,6 +10,7 @@ const courseRouter = require("./routes/course");
 const studentRouter = require("./routes/student");
 const lectureRouter = require("./routes/lecture");
 const dailyAttendanceRouter = require("./routes/dailyAttendance");
+const attendanceRouter = require("./routes/attendance");
 
 
 // Express App
@@ -66,6 +67,12 @@ app.use('/student',studentRouter);
 app.use('/lecture',lectureRouter);
 
 app.use('/dailyattendance',dailyAttendanceRouter);
+
+app.use('/attendance',attendanceRouter)
+
+app.get('/train',(req,res)=>{
+	res.render('trainer',{title:'Train'});
+})
 
 app.use((req, res) => {
 	console.log("Page Not Found");

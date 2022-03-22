@@ -88,7 +88,7 @@ const get_dailyAttendance_all= (req,res)=>{
       foreignField:'_id',
       as:'lecture'
     }},
-    {$match:{}},
+    {$sort:{updatedAt:-1}},
   ]).then((result)=>{
     console.log(result[0]);
     res.render('DailyAttendance/viewDailyAttendance',{title:'Daily Attendance',attendances:result});

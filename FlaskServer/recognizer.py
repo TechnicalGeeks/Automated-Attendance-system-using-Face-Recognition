@@ -78,6 +78,8 @@ def cameraRun(camera1,camera2,classNames,encodeListKnown,lectureTime):
         cv2.imshow('Webcam2', img2)
         cv2.waitKey(1)
     print(studentAttendances)
+    for id in studentAttendances.keys():
+        if len(studentAttendances[id])==1: studentAttendances[id].append(datetime.now().strftime('%H:%M:%S'))
     return studentAttendances
 
 

@@ -28,7 +28,7 @@ def train():
         user = request.json
         print(user)
         trainer.train(division=user['div'],year=user['year'],branch=user['branch'])
-    return "Trained Model Successfully"
+    return jsonify(status='1')
 
 @app.route("/recognize", methods=['POST'])
 def recognize():
