@@ -3,7 +3,7 @@ import datetime
 def MarkAttendance(studentAttendances):
   threshold=0
   finalAttendance=checkAttendance(studentAttendances,threshold)
-  print(finalAttendance)
+  print("Mark Attendance Out",finalAttendance)
   return finalAttendance
 
 def checkAttendance(studentAttendances,threshold):
@@ -14,10 +14,12 @@ def checkAttendance(studentAttendances,threshold):
   #     totalTime += convertToMinutes(Out) - convertToMinutes(In)
   #   if totalTime > threshold:
   #     finalAttendance.append(id)
-  print(studentAttendances)
+  print("Check Attendance",studentAttendances)
   for id in studentAttendances.keys():
     tottalTime=convertToMinutes(studentAttendances[id][1]) - convertToMinutes(studentAttendances[id][0])
-    if tottalTime > threshold:
+    print("Total Time",tottalTime)
+    print("Threshold",threshold)
+    if tottalTime >= threshold:
       finalAttendance.append(id)
   return finalAttendance
 

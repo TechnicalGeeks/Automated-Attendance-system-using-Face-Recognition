@@ -61,6 +61,9 @@
     <%- include('./.Partials/footer.ejs') %> 
 
     <script>
+      if(localStorage.getItem('role')!=1){
+            window.location.replace('/home')
+      }
       function train(event) {
         event.preventDefault();
         var branch = document.getElementById('branch').value;

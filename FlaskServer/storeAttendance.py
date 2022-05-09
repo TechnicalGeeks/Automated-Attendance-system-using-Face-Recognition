@@ -5,9 +5,9 @@ def storeAttendance(studentAttendances,lectureID):
   client = pymongo.MongoClient("mongodb://localhost:27017/")
   db=client["college"]
   my_collection=db["dailyattendances"]
-  print(studentAttendances)
+  print("store Attendance in",studentAttendances)
   finalAttendance=MarkAttendance.MarkAttendance(studentAttendances)
-  print(finalAttendance)
+  print("Final",finalAttendance)
   for id in finalAttendance:
     my_collection.update_one({"studentId":id,"lectureId":lectureID},{"$set":{"Attendance":"P"}})
 

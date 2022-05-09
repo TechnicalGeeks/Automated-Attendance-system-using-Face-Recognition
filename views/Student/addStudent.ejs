@@ -101,6 +101,9 @@
 
     <!-- JS Scripts -->
   <script>
+    if(localStorage.getItem('role')!=1){
+      window.location.replace('/home')
+    }
     function addOther(val,id) {
       console.log(val,id);
       if(val=="0"){

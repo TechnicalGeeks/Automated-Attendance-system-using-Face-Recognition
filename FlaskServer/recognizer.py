@@ -7,7 +7,7 @@ from datetime import timedelta
 from numpy import load
 
 studentAttendances={}
-def recognize(branch,year,division,firstCamera=0,secondCamera='https://100.68.140.76:8080/video',lectureTime=0.015):
+def recognize(branch,year,division,firstCamera=0,secondCamera='http://192.168.137.190:8080//video',lectureTime=0.015):
     
     classNames = []
     encodeListKnown=[]
@@ -73,7 +73,8 @@ def cameraRun(camera1,camera2,classNames,encodeListKnown,lectureTime):
                 cv2.rectangle(img2, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
                 cv2.putText(img2, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
                 markTime2(name)
-
+        # cv2.namedWindow("Webcam2", cv2.WINDOW_NORMAL)
+        # img2 = cv2.resize(img2, (960, 540)) 
         cv2.imshow('Webcam1', img1)
         cv2.imshow('Webcam2', img2)
         cv2.waitKey(1)
