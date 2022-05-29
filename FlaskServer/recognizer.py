@@ -7,7 +7,7 @@ from datetime import timedelta
 from numpy import load
 
 studentAttendances={}
-def recognize(branch,year,division,firstCamera=0,secondCamera='http://192.168.137.190:8080//video',lectureTime=0.015):
+def recognize(branch,year,division,firstCamera=0,secondCamera='http://100.79.222.100:8080//video',lectureTime=0.015):
     
     classNames = []
     encodeListKnown=[]

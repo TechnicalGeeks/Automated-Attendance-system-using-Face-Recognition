@@ -4,7 +4,11 @@
 <%- include('../.Partials/header.ejs') %>
 <body>
     <%- include('../.Partials/nav.ejs') %> 
-
+    <script>
+      if(localStorage.getItem('role')>2){
+          window.location.replace('/home')
+      }  
+    </script>
     <div class="content">
       <!-- component -->
       <section class="container mx-auto p-6 font-mono">
@@ -60,6 +64,7 @@
           </div>
       </section>
   </div>
+  
   <%- include('../.Partials/footer.ejs') %> 
 </body>
 </html>

@@ -3,6 +3,11 @@
 
 <%- include('../.Partials/header.ejs') %>
 <body>
+  <script>
+    if(localStorage.getItem('role')!=1){
+      window.location.replace('/home')
+    }
+  </script>
     <%- include('../.Partials/nav.ejs') %> 
 
     <div class="content">
@@ -101,9 +106,7 @@
 
     <!-- JS Scripts -->
   <script>
-    if(localStorage.getItem('role')!=1){
-      window.location.replace('/home')
-    }
+    
     function addOther(val,id) {
       console.log(val,id);
       if(val=="0"){
@@ -179,8 +182,8 @@
       }).then(res=>res.json())
       .then((data)=>{
         if(data.status=="1"){
-          alert("Attendance Added Successfully");
-          window.location.reload();
+          alert("Face Captured Successfully");
+          // window.location.reload();
         }
         if(data.error){
           console.log(data.error);

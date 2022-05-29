@@ -3,6 +3,11 @@
 
 <%- include('../.Partials/header') %>
 <body>
+    <script>
+        if(localStorage.getItem('role')>2){
+            window.location.replace('/home')
+        }
+    </script>
     <%- include('../.Partials/nav') %>
     <div class="content">
         <!-- component -->
@@ -74,9 +79,7 @@
     </div>
     <%- include('../.Partials/footer') %>
     <script>
-        if(localStorage.getItem('role')!=1){
-            window.location.replace('/home')
-        }
+        
         function update(id) {
             let rollNo=document.getElementById("rollNo#"+id).value;
             let name=document.getElementById("name#"+id).value;

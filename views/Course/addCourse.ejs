@@ -4,7 +4,11 @@
 <%- include('../.Partials/header.ejs') %>
 <body>
     <%- include('../.Partials/nav.ejs') %> 
-
+    <script>
+      if(localStorage.getItem('role')!=1){
+          window.location.replace('/home')
+      }
+    </script>
     <div class="content">
       <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" action="/course/add" method="POST">
           <h2 class="title-font text-2xl font-medium mx-auto mt-6 mb-6 text-center">Add Course</h2>
@@ -79,6 +83,7 @@
 
     <!-- JS Scripts -->
   <script>
+    
     function addOther(val,id) {
       console.log(val,id);
       if(val=="0"){

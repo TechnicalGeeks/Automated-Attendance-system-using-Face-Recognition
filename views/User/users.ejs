@@ -3,6 +3,31 @@
 
 <%- include('../.Partials/header') %>
 <body>
+    <script>
+        if(localStorage.getItem('role')!=1){
+            window.location.replace('/home')
+        }
+        function update(id) {
+            let role=document.getElementById("role#"+id).value;
+            fetch("/user/update",{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({id:id,role:role})
+            }).then(response=>response.json())
+            .then((data)=>{
+                if(data.error){
+                    console.log(data.error);
+                }
+                if(data.status==1){
+                    window.location.reload();
+                }
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+    </script>
     <%- include('../.Partials/nav') %>
     <div class="content">
         <!-- component -->
@@ -80,30 +105,6 @@
         </section>
     </div>
     <%- include('../.Partials/footer') %>
-    <script>
-        if(localStorage.getItem('role')!=1){
-            window.location.replace('/home')
-        }
-        function update(id) {
-            let role=document.getElementById("role#"+id).value;
-            fetch("/user/update",{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({id:id,role:role})
-            }).then(response=>response.json())
-            .then((data)=>{
-                if(data.error){
-                    console.log(data.error);
-                }
-                if(data.status==1){
-                    window.location.reload();
-                }
-            }).catch((err)=>{
-                console.log(err);
-            })
-        }
-    </script> 
+     
 </body> 
 </html>

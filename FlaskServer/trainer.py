@@ -19,8 +19,11 @@ def train(branch,year,division):
     for img,clr in zip(images, classNames):
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         print(f'Training {clr}')
-        encode = face_recognition.face_encodings(img)[0]
-        encodeList.append(encode)
+        try :
+            encode = face_recognition.face_encodings(img)[0]
+            encodeList.append(encode)
+        except:
+            print(f'Face Encodings not found for {clr}')
 
     modelPath="Trained_Models"+"/"+branch+"/"+year+"/"+division+"/"
     if not os.path.exists(modelPath):

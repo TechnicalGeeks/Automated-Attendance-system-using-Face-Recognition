@@ -3,6 +3,11 @@
 
 <%- include('../.Partials/header.ejs') %>
 <body>
+  <script>
+    if(localStorage.getItem('role')>2){
+        window.location.replace('/home')
+    }  
+  </script>
     <%- include('../.Partials/nav.ejs') %> 
 
     <div class="content">
@@ -65,7 +70,7 @@
                             <p class="font-semibold text-black"><%= attendance.lecture[0]  && attendance.lecture[0].subject %></p>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
-                            <p class="font-semibold text-black"><%= attendance.lecture[0] && attendance.lecture[0].createdAt %></p>
+                            <p class="font-semibold text-black"><%= attendance.lecture[0] && attendance.lecture[0].createdAt || attendance.createdAt   %></p>
                           </td>
                           <td class="px-4 py-3 text-ms font-semibold border">
                             <p class="font-semibold text-black"><%= attendance.Attendance %></p>
@@ -81,5 +86,6 @@
       </section>
   </div>
   <%- include('../.Partials/footer.ejs') %> 
+  
 </body>
 </html>

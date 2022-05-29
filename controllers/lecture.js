@@ -76,7 +76,7 @@ const getCourseDetails=async (lectures)=>{
 		let course=await Course.find({id:lectures[i].courseId}).then((course)=>{return course});
 		console.log("##"+i,course);
 		course=course[0];
-		lectures[i].branch=await course.branch;
+		lectures[i]['branch']=await course['branch'];
 		lectures[i]['year']=await course.year;
 		lectures[i]['sem']=await course.sem;
 		lectures[i]['division']=await course.division;

@@ -50,8 +50,9 @@ const get_student_all=(req,res)=>{
 const get_student_delete=(req,res)=>{
 	let id=req.params.id;
 	Student.findByIdAndDelete(id).then((result)=>{
-		console.log(result);
-		res.redirect('/student/all');
+			console.log(result,result1);
+			res.redirect('/student/all');
+		
 	});
 };
 

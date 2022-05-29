@@ -4,7 +4,11 @@
 <%- include('../.Partials/header.ejs') %>
 <body>
     <%- include('../.Partials/nav.ejs') %> 
-
+  <script>
+    if(localStorage.getItem('role')>2){
+        window.location.replace('/home')
+    }
+  </script>
     <div class="content">
       <form class="form w-full max-w-lg mx-auto my-20 p-2 rounded-lg bg-white bg-opacity-70" >
           <h2 class="title-font text-2xl font-medium mx-auto mt-6 mb-6 text-center">Create Lecture</h2>
@@ -94,6 +98,9 @@
     <%- include('../.Partials/footer.ejs') %> 
 
   <script>
+    if(localStorage.getItem('role')>2){
+        window.location.replace('/home')
+    }
     let branch="";
     let sem="";
     let year="";

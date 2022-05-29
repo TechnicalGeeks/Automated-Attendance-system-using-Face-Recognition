@@ -8,7 +8,13 @@
     <!-- Main Container -->
     <div class="content">
         <div class="h-full">
- 
+            <% let role={
+                  '1':'Admin',
+                  '2':'Faculty',
+                  '3':'Student',
+                  '4':'Guest'
+                }
+            %>
             <div class="border-b-2 block md:flex">
           
               <div class="w-full md:w-2/5 p-4 sm:p-6 lg:p-8 bg-white bg-opacity-50 shadow-md">
@@ -44,6 +50,12 @@
                     <label for="password" class="font-semibold text-gray-700 block pb-1">Password</label>
                     <div class="flex">
                       <input disabled id="password" class="border-1  rounded-r px-4 py-2 w-full" type="password" value="<%= user.password?user.password:"" %>" placeholder="Enter Password" />
+                    </div>
+                  </div>
+                  <div class="pb-6">
+                    <label for="role" class="font-semibold text-gray-700 block pb-1">Role</label>
+                    <div class="flex">
+                      <input disabled id="role" class="border-1  rounded-r px-4 py-2 w-full" type="role" value="<%= user.role?role[user.role]:"" %>" placeholder="Enter Password" />
                     </div>
                   </div>
                   <div class="pb-4">

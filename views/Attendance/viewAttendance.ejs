@@ -3,6 +3,11 @@
 
 <%- include('../.Partials/header.ejs') %>
 <body>
+  <script>
+    if(localStorage.getItem('role')>3){
+        window.location.replace('/home')
+    }
+  </script>
     <%- include('../.Partials/nav.ejs') %> 
 
     <div class="content">
